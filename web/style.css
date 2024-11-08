@@ -1,0 +1,120 @@
+
+*{
+    margin: 0;
+    border: 0;
+}
+
+header{
+    height: 100px;
+    background-color: rgb(37, 37, 37);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+a{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    text-decoration: none;
+    color: rgba(240, 248, 255, 0.726);
+
+}
+
+a:hover{
+    color: rgb(158, 0, 0);
+}
+
+body{
+    background-color: rgb(54, 54, 54);
+}
+
+.SignInPageButton{
+    width: 60px;
+}
+
+.SignInPageButton:hover{
+    transform: scale(1.03);
+    transition: transform 0.2s;
+}
+
+.FormSection{
+    height: 600px;
+    display: flex;
+    width: 100%;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.FormSection h1{
+    color: aliceblue;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.SignIn{
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.Register{
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+input{
+    width: 400px;
+    height: 300px;
+    font-size: large;
+    padding-left: 20px;
+    outline: none;
+}
+
+.SignInButton{
+    color: rgb(255, 240, 240);
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(158, 0, 0);
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 20px;
+}
+.SignInButton:hover{
+    transform: scale(1.03);
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.CreateAccountButton{
+    color: rgb(255, 240, 240);
+    text-decoration: underline;
+}
+.CreateAccountButton:hover{
+    cursor: pointer;
+}
+
+.RegisterAccountButton{
+    color: rgb(255, 240, 240);
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(158, 0, 0);
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 20px;
+}
+.RegisterAccountButton:hover{
+    transform: scale(1.03);
+    transition: transform 0.2s;
+    cursor: pointer;
+}
