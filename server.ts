@@ -1,3 +1,5 @@
+import { Database } from "bun:sqlite";
+
 const BASE_PATH = '.';
 const server = Bun.serve({
     port: 3000,
@@ -33,6 +35,38 @@ const server = Bun.serve({
         // API calls
         if (req.url.includes('/api/')) {
             // TODO add api calls.
+
+            const db = new Database("movie-reviews.sqlite");
+
+            debugger;
+
+            // let query = db.query(`
+            //     drop table if exists user
+            // `);
+            // query.run();
+
+            db.query(`
+                create table if not exists user (
+                    id INTEGER PRIMARY KEY,
+                    nickname TEXT
+            )`
+            ).run();
+
+            db.query(`
+                insert into user (nickname)
+                values ("Leo")
+                `).run();
+
+            let a;
+            a = db.query(`
+                select count(*) from user
+            `).get();
+
+            a = db.query(`
+                select * from user   
+            `).all();
+
+            console.log(a)
         }
 
         return new Response("hoho");
