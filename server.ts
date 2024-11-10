@@ -1,4 +1,5 @@
 import { Database } from "bun:sqlite";
+import { register } from './register';
 
 const BASE_PATH = '.';
 const server = Bun.serve({
@@ -10,12 +11,12 @@ const server = Bun.serve({
                 "Content-Type": "text/html",
             },
         }),
-        "/signin": new Response(await Bun.file("./web/signinpage.html").bytes(), {
+        "/signin": new Response(await Bun.file("./web/signin_page.html").bytes(), {
             headers: {
                 "Content-Type": "text/html",
             },
         }),
-        "/register": new Response(await Bun.file("./web/RegisterPage.html").bytes(), {
+        "/register": new Response(await Bun.file("./web/register_page.html").bytes(), {
             headers: {
                 "Content-Type": "text/html",
             },
@@ -36,37 +37,13 @@ const server = Bun.serve({
         if (req.url.includes('/api/')) {
             // TODO add api calls.
 
-            const db = new Database("movie-reviews.sqlite");
 
-            debugger;
+            if (req.url.includes('/register')) {
+                register();
+            }
 
-            // let query = db.query(`
-            //     drop table if exists user
-            // `);
-            // query.run();
 
-            db.query(`
-                create table if not exists user (
-                    id INTEGER PRIMARY KEY,
-                    nickname TEXT
-            )`
-            ).run();
-
-            db.query(`
-                insert into user (nickname)
-                values ("Leo")
-                `).run();
-
-            let a;
-            a = db.query(`
-                select count(*) from user
-            `).get();
-
-            a = db.query(`
-                select * from user   
-            `).all();
-
-            console.log(a)
+            
         }
 
         return new Response("hoho");
