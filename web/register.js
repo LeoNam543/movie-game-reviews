@@ -1,4 +1,3 @@
-
 const nicknameInput = document.getElementById('nickname');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
@@ -17,22 +16,27 @@ async function onRegister() {
     const password = passwordInput.value;
 
     if (!nickname || !email || !password) {
+        errorMessage.innerText = 'not all credentials entered.'
         throw new Error("not all credentials entered")
     }
 
     try {
         console.log('calling fetch')
         //TODO Figure out how to redirect after successful registration!!!
-        const response = await fetch("/api/register", {
+        const res = await fetch("/api/register", {
             redirect: 'follow',
             method: "POST",
             body: JSON.stringify({ nickname, email, password }),
         });
 
-        if (!response.ok) {
+        if (!res.ok) {
             throw new Error();
         }
+        if (res.redirected) {
+            window.location.href = res.url;
+        }
     } catch (e) {
-        errorMessage.innerText = 'Something went wrong.'
+        errorMessage.innerText = 'User already registered.'
     }
 }
+

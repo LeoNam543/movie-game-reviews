@@ -1,4 +1,6 @@
+import { password } from 'bun';
 import { register } from './register';
+import { signin } from './register';
 
 const BASE_PATH = '.';
 const server = Bun.serve({
@@ -46,9 +48,18 @@ const server = Bun.serve({
                     throw new Error("not all credentials entered")
                 }
 
-                register(p.nickname, p.email, p.password)
-                debugger;
-                return Response.redirect("/", 301);
+                return register(p.nickname, p.email, p.password)
+            }
+
+
+            if (req.url.includes('/signin')) {
+                const p = await req.json();
+                if (!p.email || !p.password) {
+                    throw new Error("not all credentials entered")
+                }
+                return signin(p.email, p.password)
+                
+
             }
         }
 

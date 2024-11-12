@@ -8,24 +8,33 @@
 </head>
 <body>
     <header>
-        <a href="/" class="text">MOVIE REVIEWS</a>
+        <div class="headercontent">
+            <div class="wrapper_movies_games">
+                <a href="/" class="text">MOVIES</a>
+                <a href="/" class="text">GAMES</a>
+            </div>
 
-        <a href="signin">
-            <img src="/web/img/SignInlogo.png" class="SignInPageButton" alt="">
-        </a>
-        
+            <div class="addreview_profile">
+                <a href="signin">
+                    <img src="/web/img/SignInlogo.png" class="SignInPageButton" alt="">
+                </a>      
+            </div>
+        </div>
     </header>
 
 
     <div class="FormSection">
         <h1>Login</h1>
-        <form class="SignIn" action="/">
-                <input type="text" name="Email" id="Email" placeholder="Email">
-                <input type="text" name="Password" id="Password" placeholder="Password">
-        </form>
-        <button class="SignInButton">Sign In</button>
+        <div class="SignIn">
+                <input type="text" name="email" id="email" placeholder="Email">
+                <input type="text" name="password" id="password" placeholder="Password">
+        </div>
+        <button class="signin_btn" id="signin_btn">Sign In</button>
         <a href="register" class="CreateAccountButton">Create account</a>
+        <div class="errorMessage" id="error-message"></div>
     </div>
+
+    <script src="/web/signin.js"></script>
 
 </body>
 </html>
