@@ -28,28 +28,17 @@ db.query(
     `create table
     if not exists session (
         id INTEGER NOT NULL PRIMARY KEY,
+        session_id STRING NOT NULL,
         user_id INTEGER NOT NULL,
         last_active TIMESTAMP NOT NULL
     )`
 ).run();
-
-
-// Tests
-db.query(`
-    insert into user (nickname, email, password)
-    values ("Leo", "a@a.com", "123cdtnrf")    
-`).run();
 
 let a = db.query(`
     select * from user   
 `).all();
 
 console.log(a)
-
-db.query(`
-    insert into session (user_id, last_active)
-    values (123, 123123123)    
-`).run();
 
 a = db.query(`
     select * from session   
