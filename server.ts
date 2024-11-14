@@ -1,17 +1,19 @@
 import { password } from 'bun';
 import { register } from './register';
 import { signin } from './register';
+import { Database } from "bun:sqlite";
+
 
 const BASE_PATH = '.';
 const server = Bun.serve({
     port: 3000,
     static: {
         // serve a file by buffering it in memory
-        "/": new Response(await Bun.file("./web/loged_in_page.html").bytes(), {
-            headers: {
-                "Content-Type": "text/html",
-            },
-        }),
+        // "/": new Response(await Bun.file("./web/loged_in_page.html").bytes(), {
+        //     headers: {
+        //         "Content-Type": "text/html",
+        //     },
+        // }),
         "/anon": new Response(await Bun.file("./web/index.html").bytes(), {
             headers: {
                 "Content-Type": "text/html",
@@ -58,11 +60,46 @@ const server = Bun.serve({
                     throw new Error("not all credentials entered")
                 }
                 return signin(p.email, p.password)
-                
+
+
+            }
+
+            if (req.url.includes('/test')) {
+                console.log(req.headers.getSetCookie());
+                debugger;
 
             }
         }
 
+        debugger;
+        const url = new URL(req.url);
+        if (url.pathname === "/") {
+            debugger;
+            const cookieHeader = req.headers.get('cookie')
+            if (!cookieHeader) {
+                return Response.redirect("/signin", 301);
+            }
+
+            const sessionId = cookieHeader.split("=")[1]
+            if (!sessionId) {
+                throw new Error("Wrong cookie")
+            }
+            console.log(sessionId)
+
+            debugger;
+
+            // TODO dopilit' etu hernyu
+            const db = new Database("movie-reviews.sqlite");
+            const sessionIdDatabase = db.query(`
+                select session_id, last_active from session
+                `)
+
+            return new Response(await Bun.file("./web/loged_in_page.html").bytes(), {
+                    headers: {
+                        "Content-Type": "text/html",
+                    },
+                });
+        }
         return new Response("hoho");
     },
 });

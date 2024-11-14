@@ -24,7 +24,6 @@ async function onRegister() {
         console.log('calling fetch')
         //TODO Figure out how to redirect after successful registration!!!
         const res = await fetch("/api/register", {
-            redirect: 'follow',
             method: "POST",
             body: JSON.stringify({ nickname, email, password }),
         });
@@ -33,6 +32,7 @@ async function onRegister() {
             throw new Error();
         }
         if (res.redirected) {
+            
             window.location.href = res.url;
         }
     } catch (e) {
