@@ -29,8 +29,7 @@ db.query(
     if not exists session (
         id INTEGER NOT NULL PRIMARY KEY,
         session_id STRING NOT NULL,
-        user_id INTEGER NOT NULL,
-        last_active TIMESTAMP NOT NULL
+        user_id INTEGER NOT NULL
     )`
 ).run();
 

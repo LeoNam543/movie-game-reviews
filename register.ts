@@ -1,9 +1,8 @@
 import { Database } from "bun:sqlite";
-const db = new Database("movie-reviews.sqlite");
 import { v4 as uuidv4 } from 'uuid';
-const http = require('http');
 
 export function register(nickname: string, email: string, password: string) {
+    const db = new Database("movie-reviews.sqlite");
 
     // Check if user exists.
     const query = db.query(`
@@ -20,17 +19,19 @@ export function register(nickname: string, email: string, password: string) {
         insert into user (nickname, email, password)
         values ("${nickname}", "${email}", "${password}")
         `).run();
-    let userbase = db.query(`
-        select * from user
-        `).all();
-    console.log(userbase)
-    const sessionId = uuidv4();
+
+    // User display
+    // let userbase = db.query(`
+    //     select * from user
+    //     `).all();
+    // console.log(userbase)
+
     // Create session.
+    const sessionId = uuidv4();
     createSession(email, password, sessionId)
-    const response = Response.redirect("/", 301);
+    const response = Response.redirect("/home");
     writeSessionCookie(sessionId, response)
 
-    debugger;
 
     return response;
 }
@@ -38,6 +39,8 @@ export function register(nickname: string, email: string, password: string) {
 
 
 export function signin(email: string, password: string) {
+    const db = new Database("movie-reviews.sqlite");
+
     // Check user exists.
     const query = db.query(`
         select count(*) as counter from user where email="${email}" and password="${password}"
@@ -47,7 +50,7 @@ export function signin(email: string, password: string) {
         throw new Error("User not found")
     }
 
-    const response = Response.redirect("/", 301);
+    const response = Response.redirect("/home", 301);
     const sessionId = uuidv4();
     // Create session.
     createSession(email, password, sessionId)
@@ -55,28 +58,29 @@ export function signin(email: string, password: string) {
     return response
 }
 
-function writeSessionCookie(sessionId:string, response:Response) {
-     // Add session id to cookies.
-     response.headers.set("Set-Cookie", `sessionId=${sessionId}; Path=/;`,);
-     console.log(response.headers.getSetCookie())
- 
+function writeSessionCookie(sessionId: string, response: Response) {
+    // Add session id to cookies.
+    response.headers.set("Set-Cookie", `sessionId=${sessionId}; Path=/;`,);
+    // console.log(response.headers.getSetCookie())
+
 }
 
-function createSession(email:string, password:string, sessionId:string) {
+function createSession(email: string, password: string, sessionId: string) {
+    const db = new Database("movie-reviews.sqlite");
+
     // Find user id.
     const result = db.query(`
         select id from user where email="${email}" and password="${password}"
         `).get() as { id: number };
     const userId = result.id
     // Find date.
-    const lastActive = Date.now()
     // insert into session.
     db.query(`
-        insert into session (session_id, user_id, last_active)
-        values ("${sessionId}", "${userId}", "${lastActive}")
+        insert into session (session_id, user_id)
+        values ("${sessionId}", "${userId}")
         `).run();
-    let sessionInfo = db.query(`
-        select * from session
-        `).all();
-    console.log(sessionInfo)
+    // let sessionInfo = db.query(`
+    //     select * from session
+    //     `).all();
+    // console.log(sessionInfo)
 }
