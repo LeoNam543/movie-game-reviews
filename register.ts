@@ -28,19 +28,18 @@ export function register(nickname: string, email: string, password: string) {
 
     // Create session.
     const sessionId = uuidv4();
-    createSession(email, password, sessionId)
+    createSession(email, password, sessionId, 0)
     const response = Response.redirect("/home");
     writeSessionCookie(sessionId, response)
-
 
     return response;
 }
 
-
+const adminGmail = "admin@gmail.com"
+const adminPassword = "admin123"
 
 export function signin(email: string, password: string) {
     const db = new Database("movie-reviews.sqlite");
-
     // Check user exists.
     const query = db.query(`
         select count(*) as counter from user where email="${email}" and password="${password}"
@@ -50,10 +49,18 @@ export function signin(email: string, password: string) {
         throw new Error("User not found")
     }
 
-    const response = Response.redirect("/home", 301);
+    let redirectPath: string = '/home';
+    let isAdmin: number = 0;
+    // Check if admin
+    if (email === adminGmail && password === adminPassword) {
+        redirectPath = '/adminpage';
+        isAdmin = 1;
+    }
+
+    const response = Response.redirect(redirectPath);
     const sessionId = uuidv4();
     // Create session.
-    createSession(email, password, sessionId)
+    createSession(email, password, sessionId, isAdmin)
     writeSessionCookie(sessionId, response)
     return response
 }
@@ -65,7 +72,7 @@ function writeSessionCookie(sessionId: string, response: Response) {
 
 }
 
-function createSession(email: string, password: string, sessionId: string) {
+function createSession(email: string, password: string, sessionId: string, isAdmin: number) {
     const db = new Database("movie-reviews.sqlite");
 
     // Find user id.
@@ -73,14 +80,18 @@ function createSession(email: string, password: string, sessionId: string) {
         select id from user where email="${email}" and password="${password}"
         `).get() as { id: number };
     const userId = result.id
-    // Find date.
     // insert into session.
     db.query(`
-        insert into session (session_id, user_id)
-        values ("${sessionId}", "${userId}")
+        insert into session (session_id, user_id, is_admin)
+        values ("${sessionId}", "${userId}", "${isAdmin}")
         `).run();
-    // let sessionInfo = db.query(`
-    //     select * from session
-    //     `).all();
-    // console.log(sessionInfo)
+
+    let sessionInfo = db.query(`
+        select * from session
+        `).all();
+    console.log(sessionInfo)
+    let userInfo = db.query(`
+        select * from user
+        `).all();
+    console.log(userInfo)
 }

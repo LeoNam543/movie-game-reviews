@@ -1,4 +1,5 @@
 import { Database } from "bun:sqlite";
+import { adminGmail, adminName, adminPassword } from './admin_credentials';
 
 // Create db if it does not exist.
 const db = new Database("movie-reviews.sqlite");
@@ -23,20 +24,31 @@ db.query(`
         )`
 ).run();
 
-// Create session table.
+// Create session table. 
+// not admin - 0 
+// admin - 1
 db.query(
     `create table
     if not exists session (
         id INTEGER NOT NULL PRIMARY KEY,
         session_id STRING NOT NULL,
-        user_id INTEGER NOT NULL
+        user_id INTEGER NOT NULL,
+        is_admin INTEGER NOT NULL 
     )`
 ).run();
 
+// Add admin user.
+db.query(`
+    insert into user (nickname, email, password) values ("${adminName}", "${adminGmail}", "${adminPassword}")
+    `).get()
+
+
+// Show users.
 let a = db.query(`
     select * from user   
 `).all();
 
+// Show sessions.
 console.log(a)
 
 a = db.query(`
@@ -44,3 +56,9 @@ a = db.query(`
 `).all();
 
 console.log(a)
+
+
+
+
+
+

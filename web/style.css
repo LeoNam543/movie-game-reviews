@@ -55,6 +55,53 @@ a:hover{
 }
 
 
+.addcontent{
+    justify-content: center;
+    align-items: center;
+    border: white solid 2px;
+    width: 80%;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.addcontent select{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    width: 290px;
+    height: 30px;
+    text-align: center;
+    outline: none;
+}
+.addcontent p{
+    color: aliceblue;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    width: 270px;
+    text-align: center;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.selectfile{
+    color: aliceblue;
+    height: 25px;
+}
+.addcontent input{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    width: 270px;
+}
+.content_description{
+    font-weight: bold;
+    width: 270px;
+    height: 200px;
+    font-size: large;
+    padding-left: 20px;
+    outline: none;
+}
+.content_name{
+    display: flex;
+    height: 30px;
+
+}
+
 .maincontent{
     width: 100%;
     height: 100%;
@@ -128,8 +175,9 @@ body{
 .addreview_profile{
     display: flex;
     width: 180px;
+    gap: 5px;
     justify-self: flex-end;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
 
 }
@@ -151,6 +199,38 @@ body{
     text-decoration: none;
     border: 2px solid white;
 }
+
+.signOutlogoButton{
+    width: 30px;
+    border: 2px white solid;
+    padding: 5px;
+    border-radius: 10px;
+}
+.signOutlogoButton:hover{
+    transform: scale(1.03);
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.createpostbutton{
+    color: rgb(255, 240, 240);
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(158, 0, 0);
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 20px;
+    width: 300px;
+}
+
+.createpostbutton:hover{
+    transform: scale(1.03);
+    transition: transform 0.2s;
+    cursor: pointer;
+    background-color: rgb(139, 0, 0);
+}
+
 
 .addreviewbtn:hover{
     transform: scale(1.03);

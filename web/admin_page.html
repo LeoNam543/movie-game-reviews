@@ -14,13 +14,13 @@
         <div class="headercontent">
             <div class="wrapper_movies_games">
                 <a href="/" class="text">MOVIES</a>
+
                 <a href="/" class="text">GAMES</a>
             </div>
 
             <div class="addreview_profile">
-                <button class="addreviewbtn" id="addreviewbtn">+ Add Review</button>
-                <img src="/web/img/SignOutlogo.png" class="signOutlogoButton" id="signOutlogoButton" alt="">
-
+                <button class="addreviewbtn" id="addreviewbtn">+ Add content</button>
+  
             </div>
         </div>
 
@@ -49,15 +49,36 @@
                 <div class="movie-card-text">
 
                     <button id="test-btn">Test</button>
+
                 </div>
             </div>
         </div>
     </div>
 
 
-<script src="/web/logged_in.js"></script>
-<script src="/web/logout_in.js"></script>
+    <div class="addcontent">
+        <div>
+            <p>Select poster:</p>
+            <input class="selectfile" type="file" id="selectfile" name="selectfile" accept="image/png, image/jpeg" />
+        </div>
+        <div>
+            <p>Name of movie/game:</p>
+            <input class="content_name" type="text" name="content_name" id="content_name" placeholder="Content name">
+        </div>
+        <div>
+            <p>Description of movie/game:</p>
+            <textarea class="content_description" type="text" id="content_description" placeholder="Content description"></textarea>         
+        </div>
 
+        <select class="content-select">
+            <option value="1">movie</option>
+            <option value="2">game</option>
+        </select>
+        <button class="createpostbutton" id="createpostbutton">Create post</button>
+    </div>
+
+
+<script src="/web/logged_in.js"></script>
 </body>
 
 </html>
