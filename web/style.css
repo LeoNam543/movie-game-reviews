@@ -67,7 +67,7 @@ a:hover{
 }
 .addcontent select{
     font-family:Verdana, Geneva, Tahoma, sans-serif;
-    width: 290px;
+    width: 350px;
     height: 30px;
     text-align: center;
     outline: none;
@@ -86,11 +86,20 @@ a:hover{
 }
 .addcontent input{
     font-family:Verdana, Geneva, Tahoma, sans-serif;
-    width: 270px;
+    width: 350px;
 }
+
+.posterwrapper{
+    display: flex;
+    width: 350px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .content_description{
     font-weight: bold;
-    width: 270px;
+    width: 350px;
     height: 200px;
     font-size: large;
     padding-left: 20px;
@@ -140,6 +149,13 @@ a:hover{
     display: flex;
     justify-content: center;
     text-align: center;
+}
+
+.allcontent{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 body{
@@ -192,7 +208,7 @@ body{
 .addreviewbtn{
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     width: 115px;
-    height: 30px;
+    height: 40px;
     border-radius:6px;
     color: rgb(255, 255, 255);
     background: none;
@@ -233,6 +249,39 @@ body{
 
 
 .addreviewbtn:hover{
+    transform: scale(1.03);
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.homepagebtn{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    width: 115px;
+    height: 40px;
+    border-radius:6px;
+    color: rgb(255, 255, 255);
+    background: none;
+    text-decoration: none;
+    border: 2px solid white;
+}
+.homepagebtn:hover{
+    transform: scale(1.03);
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.addcontentbtn{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    width: 115px;
+    height: 40px;
+    border-radius:6px;
+    color: rgb(255, 255, 255);
+    background: none;
+    text-decoration: none;
+    border: 2px solid white;
+    display: none;
+}
+.addcontentbtn:hover{
     transform: scale(1.03);
     transition: transform 0.2s;
     cursor: pointer;

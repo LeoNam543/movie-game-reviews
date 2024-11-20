@@ -14,6 +14,16 @@ db.query(`
     drop table if exists session    
 `).run();
 
+// Drop files table if exists.
+db.query(`
+    drop table if exists files    
+`).run();
+
+// Drop content
+db.query(`
+    drop table if exists content    
+`).run();
+
 // Create user table.
 db.query(`
     create table if not exists user (
@@ -36,6 +46,28 @@ db.query(
         is_admin INTEGER NOT NULL 
     )`
 ).run();
+
+// Create files table. 
+db.query(
+    `create table
+    if not exists files (
+        id INTEGER NOT NULL PRIMARY KEY,
+        file_id STRING NOT NULL,
+        data BLOB NOT NULL
+    )`
+).run();
+
+// 0 = movie, 1 = game
+db.query(`
+    create table if not exists content (
+    id INTEGER NOT NULL PRIMARY KEY,
+    content_name STRING NOT NULL,
+    content_description STRING NOT NULL,
+    content_type INTEGER NOT NULL,
+    img_id STRING NOT NULL )
+    `).run()
+
+
 
 // Add admin user.
 db.query(`

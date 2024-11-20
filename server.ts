@@ -1,10 +1,11 @@
 import { register } from './register';
 import { signin } from './register';
 import { Database } from "bun:sqlite";
+import { v4 as uuidv4 } from 'uuid';
 const ANON_PATH = '/anon'
 const SIGN_IN_PATH = '/signin'
 const REGISTER_PATH = '/register'
-const ADMIN_PAGE_PATH = '/adminpage'
+const ADD_CONTENT_PATH = '/addcontent'
 const HOME_PATH = '/home'
 
 
@@ -44,8 +45,8 @@ const server = Bun.serve({
                 },
             });
         }
-       
-        // API calls
+
+        // External API calls
         if (url.pathname === '/api/register') {
             console.log("in api register")
             const p = await req.json();
@@ -64,22 +65,91 @@ const server = Bun.serve({
             return signin(p.email, p.password)
         }
 
-         // Check user logged in.
-         if (!checkUserLoggedIn(req)) {
+        // Check user logged in.
+        if (!checkUserLoggedIn(req)) {
             console.log('User is not logged in redirecting.')
             return Response.redirect(SIGN_IN_PATH);
         }
 
-        if (url.pathname === ADMIN_PAGE_PATH) {
+        if (url.pathname === '/api/is_admin') {
+            const isAdmin = await checkIsAdmin(req)
+            return Response.json({ isAdmin });
+        }
+
+        if (url.pathname === '/api/logout') {
+            console.log("logged out")
+            const response = Response.redirect(SIGN_IN_PATH);
+            response.headers.set("Set-Cookie", `sessionId=; Path=/;`);
+            return response
+        }
+
+        if (url.pathname === ADD_CONTENT_PATH) {
             if (!checkIsAdmin(req)) {
                 return Response.redirect(HOME_PATH);
             }
 
-            return new Response(await Bun.file("./web/admin_page.html").bytes(), {
+            return new Response(await Bun.file("./web/add_content.html").bytes(), {
                 headers: {
                     "Content-Type": "text/html",
                 },
             });
+        }
+
+        if (url.pathname === '/api/addcontent') {
+            console.log("addcontent")
+
+            const formData = await req.formData();
+            const fieldsData = formData.get('fields') as string;
+            const fileData = formData.get('file') as Blob;
+
+            console.log(typeof fileData)
+
+            if (!fieldsData || !fileData) {
+                throw new Error()
+            }
+            const fields = JSON.parse(fieldsData)
+            const file = await fileData.bytes();
+
+            const db = new Database("movie-reviews.sqlite");
+
+
+            // Insert image into DB.
+            const fileId = uuidv4();
+            const query = db.prepare("insert into files (file_id, data) values (?, ?)");
+            query.values(fileId, file)
+            query.run()
+
+            // Add film to DB.
+            debugger
+            const contentName = fields.contentName
+            const contentDesc = fields.contentDesc
+            const contentType = fields.contentType
+            // const result = db.query(`
+            //         select data from files where file_id="${fileId}"
+            //         `).get() as { data: Uint8Array };
+            if (!contentName || !contentDesc || !contentType || !fileId) {
+                console.log("Not all values")
+                throw new Error("something went wrong")
+            }
+
+            db.query(`
+                insert into content (content_name, content_description, content_type, img_id)
+                values ("${contentName}", "${contentDesc}", "${contentType}", "${fileId}")
+                `).run()
+
+            const contentTable = db.query(`
+                select * from content   
+            `).all();
+            console.log(contentTable)
+            return Response.redirect(HOME_PATH);
+
+
+
+            // debugger;
+            // if (!formData.contentName || !formData.contentDesc || formData.contentType || formData.poster) {
+            //     throw new Error("Fill out the form fully")
+            // }
+            // console.log(formData.contentDesc)
         }
 
         if (url.pathname === HOME_PATH) {
