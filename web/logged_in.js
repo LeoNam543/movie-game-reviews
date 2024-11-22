@@ -70,13 +70,26 @@ document.addEventListener('DOMContentLoaded', async () => {
         const resJson = await res.json()
         console.log(resJson)
         renderContent(resJson.content)        
+        addContentListeners(resJson.content)
 
     } catch (e) {
         errorMessage.innerText = 'Something went wrong.'
     }
 })
 
-
+function addContentListeners(content) {
+    for (const media of content) {
+        const {id} = media;
+        const cardElement = document.getElementById("card_"+id)
+        if (!cardElement) {
+            throw new Error("No card element found")
+        }
+        cardElement.addEventListener("click", () => {
+    
+            window.location.href = `/media/${id}`;
+        })
+    } 
+}
 
 function renderContent(content) {
     for (const media of content) {
@@ -95,15 +108,12 @@ function renderContent(content) {
 
         const element = document.createElement('div');
         element.innerHTML =  `
-        <div id="moviecard 1" class="moviecard 1">
+        <div id="card_${id}" class="card 1">
             <div class="content-type" >${contentType}</div>
             <img class="movie-card-image" src="/web/content_img/${img_id}" ></img>
-            <div class="movie-card-text">${content_name} ${contentType}</div>
+            <div class="movie-card-text">${content_name}</div>
         </div>
         `
-
-    
-
         contentContainer.appendChild(element)
 
 

@@ -7,6 +7,7 @@ const SIGN_IN_PATH = '/signin'
 const REGISTER_PATH = '/register'
 const ADD_CONTENT_PATH = '/addcontent'
 const HOME_PATH = '/home'
+const CONTENT_PATH = '/media/'
 
 const BASE_PATH = '.';
 const server = Bun.serve({
@@ -34,6 +35,8 @@ const server = Bun.serve({
             const file = Bun.file(filePath);
             return new Response(file);
         }
+
+        
 
         // External pages no auth required.
         if (url.pathname === ANON_PATH) {
@@ -94,6 +97,13 @@ const server = Bun.serve({
             response.headers.set("Set-Cookie", `sessionId=; Path=/;`);
             return response
         }
+        if (url.pathname === '/api/get_specific_content') {
+            const contentId = await req.text()
+            debugger
+// TODO finish this gavno
+
+            return new Response()
+        }
 
         if (url.pathname === '/api/get_content') {
             console.log("get content")
@@ -109,6 +119,14 @@ const server = Bun.serve({
             }
 
             return new Response(await Bun.file("./web/add_content.html").bytes(), {
+                headers: {
+                    "Content-Type": "text/html",
+                },
+            });
+        }
+
+        if (url.pathname.includes(CONTENT_PATH)) {
+            return new Response(await Bun.file("./web/content_page.html").bytes(), {
                 headers: {
                     "Content-Type": "text/html",
                 },
