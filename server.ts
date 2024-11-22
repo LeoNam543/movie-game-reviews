@@ -8,20 +8,32 @@ const REGISTER_PATH = '/register'
 const ADD_CONTENT_PATH = '/addcontent'
 const HOME_PATH = '/home'
 
-
 const BASE_PATH = '.';
 const server = Bun.serve({
     port: 3000,
 
     async fetch(req) {
+        const url = new URL(req.url);
+        console.log(url.pathname)
+        const db = new Database("movie-reviews.sqlite");
+
+
         // Get asset files.
         if (req.url.includes('/web/')) {
+
+            if (req.url.includes('content_img')) {
+                const pathParts = url.pathname.split("/")
+                const imageId = pathParts[pathParts.length - 1]
+                const res = db.query(`
+                    select data from files where file_id="${imageId}"
+                    `).get() as { data: Uint8Array }
+                return new Response(res.data)
+            }
+
             const filePath = BASE_PATH + new URL(req.url).pathname;
             const file = Bun.file(filePath);
             return new Response(file);
         }
-        const url = new URL(req.url);
-        console.log(url.pathname)
 
         // External pages no auth required.
         if (url.pathname === ANON_PATH) {
@@ -83,6 +95,14 @@ const server = Bun.serve({
             return response
         }
 
+        if (url.pathname === '/api/get_content') {
+            console.log("get content")
+            const res = db.query(`
+                select id, content_name, img_id, content_type from content
+                `).all() as { id: string, content_name: string, img_id: string, content_type: number }[]
+            return Response.json({ content: res })
+        }
+
         if (url.pathname === ADD_CONTENT_PATH) {
             if (!checkIsAdmin(req)) {
                 return Response.redirect(HOME_PATH);
@@ -120,7 +140,6 @@ const server = Bun.serve({
             query.run()
 
             // Add film to DB.
-            debugger
             const contentName = fields.contentName
             const contentDesc = fields.contentDesc
             const contentType = fields.contentType

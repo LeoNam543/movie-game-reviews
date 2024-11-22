@@ -2,6 +2,9 @@
 *{
     margin: 0;
     border: 0;
+    color: aliceblue;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
 }
 
 
@@ -34,11 +37,13 @@ a:hover{
     color: rgb(158, 0, 0);
 }
 
-.movie_content{
+.content_container{
     border: white solid 2px;
     width: 80%;
-    height: 400px;
+    /* height: 400px; */
     display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
     align-items: center;
     padding: 10px;
 }
@@ -47,11 +52,18 @@ a:hover{
     border: 2px white solid;
     width: 250px;
     height: 350px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
+
 
 .movie-card-image {
     border: 2px white solid;
     height: 300px;
+    width: 99%;
+    overflow: hidden;
 }
 
 
