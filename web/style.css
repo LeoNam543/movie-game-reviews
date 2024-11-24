@@ -48,6 +48,47 @@ a:hover{
     padding: 10px;
 }
 
+.content-page-wrapper{
+    border: white solid 2px;
+    height: 900px;
+    display: flex;
+    flex-direction: row;
+}
+.content-page-poster{
+    border: white solid 2px;
+    height: 65vh;
+    width: 45vh;
+    overflow:hidden;
+
+}
+.content-page-desc{
+    border: white solid 2px;
+}
+
+.content-page-title{
+    display: flex;
+    flex-direction: row;
+}
+
+.RHS{
+    border: rgb(255, 0, 0) solid 2px;
+    display: flex;
+    flex-direction: column;
+    height: 65vh;
+    width: 50vh;
+
+}
+
+.content-page-name{
+    width: 90%;
+    height: 100px;
+    border: white solid 2px;
+}
+.content-page-rating{
+    border: white solid 2px;
+    width: 100px;
+}
+
 .card{
     border: 2px white solid;
     width: 250px;
@@ -67,10 +108,11 @@ a:hover{
 }
 
 
-.addcontent{
+.addcontent{ 
+    color: black;
     justify-content: center;
     align-items: center;
-    border: white solid 2px;
+    /* border: white solid 2px; */
     width: 80%;
     height: 600px;
     display: flex;
@@ -78,6 +120,7 @@ a:hover{
     gap: 20px;
 }
 .addcontent select{
+    color: black;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     width: 350px;
     height: 30px;
@@ -109,8 +152,10 @@ a:hover{
     justify-content: center;
 }
 
+
 .content_description{
     font-weight: bold;
+    color: black;
     width: 350px;
     height: 200px;
     font-size: large;
@@ -118,6 +163,7 @@ a:hover{
     outline: none;
 }
 .content_name{
+    color: black;
     display: flex;
     height: 30px;
 
@@ -200,12 +246,34 @@ body{
     font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.deleteContent{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: rgb(255, 240, 240);
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(158, 0, 0);
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 20px;
+    width: 230px;
+}
+
+.deleteContent:hover{
+    transform: scale(1.03);
+    transition: transform 0.2s;
+    cursor: pointer;
+    background-color: rgb(139, 0, 0);
+}
+
 .addreview_profile{
+    margin-right: 10px;
     display: flex;
     width: 180px;
     gap: 5px;
     justify-self: flex-end;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
 
 }

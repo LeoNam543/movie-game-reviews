@@ -99,10 +99,26 @@ const server = Bun.serve({
         }
         if (url.pathname === '/api/get_specific_content') {
             const contentId = await req.text()
-            debugger
-// TODO finish this gavno
+            const res = db.query(`
+                select content_name, content_description, content_type, img_id from content where id="${contentId}"
+                `).get() as { content_name: string, content_description: string, content_type: number, img_id: string }[]
+            return Response.json({ content: res })
+        }
 
-            return new Response()
+        if (url.pathname === '/api/delete-content') {
+            const contentId = await req.text()
+            const res = db.query(`
+                select img_id as imgID from content where id="${contentId}"
+                `).get() as { imgID: string }
+
+            const value = Object.values(res).toString()
+            db.query(`
+                delete from content where id="${contentId}"
+            `).run()
+            db.query(`
+                delete from files where file_id="${value}"
+            `).run()
+            return Response.redirect(HOME_PATH);
         }
 
         if (url.pathname === '/api/get_content') {
