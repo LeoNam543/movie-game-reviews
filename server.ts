@@ -91,6 +91,10 @@ const server = Bun.serve({
             return Response.json({ isAdmin });
         }
 
+        if (url.pathname === '/edit/content') {
+            return new Response()
+        }
+
         if (url.pathname === '/api/logout') {
             console.log("logged out")
             const response = Response.redirect(SIGN_IN_PATH);

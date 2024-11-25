@@ -23,7 +23,12 @@
         </div>
     </header>
     <div id="error_message"></div>
+
     <div id="maincontent" class="maincontent">
+        <div class="contentPageAdminBtns">
+            <button id="deleteContent" class="deleteContent">Delete Content</button>
+            <button id="editContent" class="editContent">Edit content</button>
+        </div>
         <!-- <div class="content-page-wrapper" id="content-page-wrapper"> -->
             <!-- <div class="content-page-poster">
 
@@ -44,13 +49,37 @@
 
 
         <!-- </div> -->
+        <div class="edit-content" id="edit-content">
+                    <div class="edit-page-sign-wrapper">
+                        <p class="edit-page-sign" >Edit Page</p>         
+                    </div>
+                    <div class="posterwrapper">
+                        <p>Select poster:</p>
+                        <input class="selectfile" type="file" id="selectfile" name="selectfile" accept="image/png, image/jpeg" />
+                    </div>
+                    <div>
+                        <p>Edit name of movie/game:</p>
+                        <input class="content_name" type="text" name="content_name" id="contentName" placeholder="Content name">
+                    </div>
+                    <div>
+                        <p>Edit description:</p>
+                        <textarea class="content_description" type="text" id="contentDescription" placeholder="Content description"></textarea>         
+                    </div>
 
-        <div>
-            <button id="deleteContent" class="deleteContent">Delete Content</button>
-        </div>
+                    <select class="content-select" id="contentType">
+                        <option value="1">movie</option>
+                        <option value="2">game</option>
+                    </select>
+                    <div>
+                        <p id="errorMessage"></p>
+                    </div>
+                    <button class="createpostbutton" id="submit-edit">Submit Edit</button>
+                </div>
+
     </div>
 
 
+        
 
     <script src="/web/content_page.js"></script>
 

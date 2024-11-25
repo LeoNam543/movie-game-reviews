@@ -49,20 +49,38 @@ a:hover{
 }
 
 .content-page-wrapper{
-    border: white solid 2px;
+    /* border: white solid 2px; */
     height: 900px;
     display: flex;
     flex-direction: row;
+    padding: 10px;
+    background-color: rgb(43, 43, 43);
+    padding-left: 30px;
+    padding-right: 30px;
 }
 .content-page-poster{
-    border: white solid 2px;
+    /* border: white solid 2px; */
     height: 65vh;
     width: 45vh;
     overflow:hidden;
-
 }
+
+.content-page-poster-edit{
+    /* border: white solid 2px; */
+    height: 65vh;
+    width: 45vh;
+    overflow:hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .content-page-desc{
-    border: white solid 2px;
+    /* border: white solid 2px; */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .content-page-title{
@@ -70,19 +88,36 @@ a:hover{
     flex-direction: row;
 }
 
-.RHS{
-    border: rgb(255, 0, 0) solid 2px;
+.RHS-edit{
+    /* border: rgb(255, 0, 0) solid 2px; */
     display: flex;
     flex-direction: column;
     height: 65vh;
     width: 50vh;
+    margin-left: 10px;
+    gap: 20px;
+}
+
+
+.RHS{
+    /* border: rgb(255, 0, 0) solid 2px; */
+    display: flex;
+    flex-direction: column;
+    height: 65vh;
+    width: 50vh;
+    margin-left: 10px;
 
 }
 
+
 .content-page-name{
+    justify-content: center;
+    display:flex;
+    align-items: center;
+    font-size: 25px;
     width: 90%;
     height: 100px;
-    border: white solid 2px;
+    /* border: white solid 2px; */
 }
 .content-page-rating{
     border: white solid 2px;
@@ -107,6 +142,27 @@ a:hover{
     overflow: hidden;
 }
 
+.edit-content .content_name{
+    width: 350px;
+}
+
+.edit-content .content-select{
+    width: 370px;
+    color: black;
+    text-align: center;
+    height: 30px;
+}
+
+.edit-content{
+    color: black;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 600px;
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+}
 
 .addcontent{ 
     color: black;
@@ -144,6 +200,14 @@ a:hover{
     width: 350px;
 }
 
+.posterwrapperedit{
+    display: flex;
+    width: 350px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .posterwrapper{
     display: flex;
     width: 350px;
@@ -152,6 +216,30 @@ a:hover{
     justify-content: center;
 }
 
+.content-select-edit{
+    color: black;
+    width: 100px;
+    height: 30px;
+}
+
+.content-select-edit-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    align-items: center;
+    flex-direction: column;
+}
+
+.content_description_edit{
+    font-weight: bold;
+    color: black;
+    width: 400px;
+    height: 200px;
+    font-size: large;
+    padding-left: 20px;
+    outline: none;
+}
 
 .content_description{
     font-weight: bold;
@@ -166,7 +254,13 @@ a:hover{
     color: black;
     display: flex;
     height: 30px;
+}
 
+.content_name_edit{
+    color: black;
+    display: flex;
+    height: 30px;
+    width: 400px;
 }
 
 .maincontent{
@@ -187,9 +281,9 @@ a:hover{
 }
 
 .select_genre_text{
-    color: rgba(240, 248, 255, 0.726);
+    color: rgba(255, 255, 255, 0.726);
     font-family:Arial, Helvetica, sans-serif;
-    font-size: 20px;
+    font-size: 30px;
     margin-bottom: 10px;
 }
 
@@ -246,6 +340,54 @@ body{
     font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.content-page-title-edit{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.editContent{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: rgb(255, 240, 240);
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(158, 0, 0);
+    padding-left: 30px;
+    padding-right: 30px;
+    display: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 20px;
+    width: 230px;
+}
+
+.edit-page-sign{
+    margin-top: 10px;
+    font-size: 30px;
+}
+
+.edit-page-sign-wrapper{
+    display: flex;
+    justify-content: center;
+}
+
+.contentPageAdminBtns{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 10px;
+    background-color: rgb(43, 43, 43);
+    width: 102vh;
+}
+
+.editContent:hover{
+    transform: scale(1.03);
+    transition: transform 0.2s;
+    cursor: pointer;
+    background-color: rgb(139, 0, 0);
+}
+
 .deleteContent{
     margin-top: 10px;
     margin-bottom: 10px;
@@ -254,6 +396,7 @@ body{
     background-color: rgb(158, 0, 0);
     padding-left: 30px;
     padding-right: 30px;
+    display: none;
     padding-top: 10px;
     padding-bottom: 10px;
     font-size: 20px;

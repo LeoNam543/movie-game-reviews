@@ -1,6 +1,84 @@
 const errorMessage = document.getElementById("error_message");
 const mainContent = document.getElementById("maincontent");
 const deleteContent = document.getElementById("deleteContent")
+const signOutlogoButton = document.getElementById("signOutlogoButton");
+const editContentBTN = document.getElementById("editContent");
+const editContentForm = document.getElementById("edit-content")
+
+signOutlogoButton.addEventListener('click', (e) => signOut());
+async function signOut() {
+    try {
+        const res = await fetch("/api/logout", {
+            verbose: true,
+            redirect: 'follow',
+            method: "POST",
+        });
+
+        if (!res.ok) {
+            throw new Error();
+        }
+
+        if (res.redirected) {
+            window.location.href = res.url;
+        }
+    } catch (e) {
+        errorMessage.innerText = 'Something went wrong.'
+    }
+}
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const res = await fetch("/api/is_admin", {
+            verbose: true,
+            redirect: 'follow',
+            method: "GET",
+        });
+
+        const { isAdmin } = await res.json()
+
+        if (isAdmin) {
+            editContentBTN.style.display="block"
+        }
+
+
+        if (!res.ok) {
+            throw new Error();
+        }
+
+        if (res.redirected) {
+            window.location.href = res.url;
+        }
+    } catch (e) {
+        errorMessage.innerText = 'Something went wrong.'
+    }
+})
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const res = await fetch("/api/is_admin", {
+            verbose: true,
+            redirect: 'follow',
+            method: "GET",
+        });
+
+        const { isAdmin } = await res.json()
+
+        if (isAdmin) {
+            deleteContent.style.display="block"
+        }
+
+
+        if (!res.ok) {
+            throw new Error();
+        }
+
+        if (res.redirected) {
+            window.location.href = res.url;
+        }
+    } catch (e) {
+        errorMessage.innerText = 'Something went wrong.'
+    }
+})
 
 deleteContent.addEventListener('click', async () => {
     const parts = window.location.pathname.split('/')
@@ -49,6 +127,31 @@ document.addEventListener("DOMContentLoaded", async () => {
         errorMessage.innerText = 'Something went wrong.'
     }
 })
+
+editContentBTN.addEventListener('click', async () => {
+    try {
+        const res = await fetch("/edit/content", {
+            verbose: true,
+            redirect: 'follow',
+            method: "POST",
+        });
+
+        if (!res.ok) {
+            throw new Error();
+        }
+        editContentForm.style.display="flex"
+        document.getElementById("content-page-wrapper").style.display="none";
+        deleteContent.style.display="none";
+        editContentBTN.style.display="none";
+        
+        if (res.redirected) {
+            window.location.href = res.url;
+        }
+    } catch (e) {
+        errorMessage.innerText = 'Something went wrong.'
+    }
+});
+
 
 function renderContent(media) {
         const {content_name, content_description, content_type, img_id} = media;
