@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/web/style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <div class="headercontent">
+            <div class="wrapper_movies_games">
+                <a href="/" class="text">MOVIES/GAMES</a>
+            </div>
+
+            <div class="addreview_profile">
+                <img src="/web/img/SignOutlogo.png" class="signOutlogoButton" id="signOutlogoButton" alt="">
+
+            </div>
+        </div>
+    </header>
+    <div id="error_message"></div>
+
+    <div id="maincontent" class="maincontent">
+        <!-- <div class="contentPageAdminBtns">
+            <button id="deleteContent" class="deleteContent">Delete Content</button>
+            <button id="editContent" class="editContent">Edit content</button>
+        </div> -->
+        <!-- <div class="content-page-wrapper" id="content-page-wrapper"> -->
+            <!-- <div class="content-page-poster">
+
+            </div>
+            <div class="RHS">
+                <div class="content-page-title">
+                    <div class="content-page-name">
+
+                    </div>
+                    <div class="content-page-rating">
+
+                    </div>
+                </div>
+                <div class="content-page-desc">
+
+                </div>
+            </div> -->
+
+
+        <!-- </div> -->
+        <div class="edit-content" id="edit-content">
+                    <div class="edit-page-sign-wrapper">
+                        <p class="edit-page-sign" >Edit Page</p>         
+                    </div>
+                    
+                    <div class="posterwrapper">
+                        <p>Select poster:</p>
+                        <input class="selectfile" type="file" id="selectfile-edit" name="selectfile" accept="image/png, image/jpeg" />
+                    </div>
+                    <div>
+                        <p>Edit name of movie/game:</p>
+                        <input class="content_name" type="text" name="content_name" id="contentName-edit" placeholder="Content name">
+                    </div>
+                    <div>
+                        <p>Edit description:</p>
+                        <textarea class="content_description" type="text" id="contentDescription-edit" placeholder="Content description"></textarea>         
+                    </div>
+
+                    <select class="content-select" id="contentType-edit">
+                        <option value="1">movie</option>
+                        <option value="2">game</option>
+                    </select>
+                    <div>
+                        <p id="errorMessage"></p>
+                    </div>
+                    <button class="createpostbutton" id="submit-edit">Submit Edit</button>
+                </div>
+
+    </div>
+
+    <script src="/web/edit_content.js"></script>
+
+</body>
+
+</html>

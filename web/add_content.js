@@ -22,8 +22,8 @@ async function post() {
     const contentDesc = Desc.value
     const contentType = Type.value
     const fileArrayBuffer = await fileArrayBufferPromise;
-
     debugger
+
     if (!fileArrayBuffer || !contentName || !contentDesc || !contentType) {
         errorMessage.innerText = 'Fill out the form fully.'
         throw new Error("Fill out the form fully")

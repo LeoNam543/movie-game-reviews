@@ -6,6 +6,7 @@ const ANON_PATH = '/anon'
 const SIGN_IN_PATH = '/signin'
 const REGISTER_PATH = '/register'
 const ADD_CONTENT_PATH = '/addcontent'
+const EDIT_CONTENT_PATH = '/editcontent/'
 const HOME_PATH = '/home'
 const CONTENT_PATH = '/media/'
 
@@ -35,8 +36,6 @@ const server = Bun.serve({
             const file = Bun.file(filePath);
             return new Response(file);
         }
-
-        
 
         // External pages no auth required.
         if (url.pathname === ANON_PATH) {
@@ -86,15 +85,11 @@ const server = Bun.serve({
             return Response.redirect(SIGN_IN_PATH);
         }
 
+        // Internal API.
         if (url.pathname === '/api/is_admin') {
             const isAdmin = await checkIsAdmin(req)
             return Response.json({ isAdmin });
         }
-
-        if (url.pathname === '/edit/content') {
-            return new Response()
-        }
-
         if (url.pathname === '/api/logout') {
             console.log("logged out")
             const response = Response.redirect(SIGN_IN_PATH);
@@ -108,7 +103,6 @@ const server = Bun.serve({
                 `).get() as { content_name: string, content_description: string, content_type: number, img_id: string }[]
             return Response.json({ content: res })
         }
-
         if (url.pathname === '/api/delete-content') {
             const contentId = await req.text()
             const res = db.query(`
@@ -125,6 +119,57 @@ const server = Bun.serve({
             return Response.redirect(HOME_PATH);
         }
 
+        if (url.pathname === "/api/editcontent"){
+            const formData = await req.formData()
+            const fieldsData = formData.get('fields') as string;
+          
+            if (!fieldsData) {
+                throw new Error()
+            }
+            debugger
+            const fields = JSON.parse(fieldsData)
+            const contentId = fields.contentId
+
+            const fileData = formData.get('file') as Blob;
+            if (fileData) {
+                console.log(typeof fileData)
+                const file = await fileData.bytes();
+                
+                const res = db.query(`
+                    select img_id from content where  id="${contentId}"`
+                ).get() as {img_id : string}
+
+                const query = db.prepare(`update files set (data)=(?) where file_id="${res.img_id}"`);
+                query.values(file)
+                query.run()
+            }
+
+            const contentName = fields.contentName
+            const contentDesc = fields.contentDesc
+            const contentType = fields.contentType
+            // debugger
+            db.query(`
+                update content set content_name="${contentName}", content_description="${contentDesc}", content_type="${contentType}" where id="${contentId}"
+                `).run()
+
+
+
+
+            // db.query(`
+            //     update files set data=${file} where file_id="${res.img_id}"
+            //     `).run()
+
+            // const cuh = db.query(`
+            //     select data from files where file_id="${res.img_id}"`
+            // ).get()
+            const cuh1 = db.query(`
+                select * from files`
+            ).all()
+            console.log(cuh1)
+
+            // console.log(cuh)
+            // debugger
+        }
         if (url.pathname === '/api/get_content') {
             console.log("get content")
             const res = db.query(`
@@ -132,27 +177,6 @@ const server = Bun.serve({
                 `).all() as { id: string, content_name: string, img_id: string, content_type: number }[]
             return Response.json({ content: res })
         }
-
-        if (url.pathname === ADD_CONTENT_PATH) {
-            if (!checkIsAdmin(req)) {
-                return Response.redirect(HOME_PATH);
-            }
-
-            return new Response(await Bun.file("./web/add_content.html").bytes(), {
-                headers: {
-                    "Content-Type": "text/html",
-                },
-            });
-        }
-
-        if (url.pathname.includes(CONTENT_PATH)) {
-            return new Response(await Bun.file("./web/content_page.html").bytes(), {
-                headers: {
-                    "Content-Type": "text/html",
-                },
-            });
-        }
-
         if (url.pathname === '/api/addcontent') {
             console.log("addcontent")
 
@@ -209,6 +233,37 @@ const server = Bun.serve({
             // console.log(formData.contentDesc)
         }
 
+        // Internal pages.
+        if (url.pathname === ADD_CONTENT_PATH) {
+            if (!checkIsAdmin(req)) {
+                return Response.redirect(HOME_PATH);
+            }
+
+            return new Response(await Bun.file("./web/add_content.html").bytes(), {
+                headers: {
+                    "Content-Type": "text/html",
+                },
+            });
+        }
+        if (url.pathname.includes(EDIT_CONTENT_PATH)) {
+            if (!checkIsAdmin(req)) {
+                return Response.redirect(HOME_PATH);
+            }
+            debugger
+
+            return new Response(await Bun.file("./web/edit_content.html").bytes(), {
+                headers: {
+                    "Content-Type": "text/html",
+                },
+            });
+        }
+        if (url.pathname.includes(CONTENT_PATH)) {
+            return new Response(await Bun.file("./web/content_page.html").bytes(), {
+                headers: {
+                    "Content-Type": "text/html",
+                },
+            });
+        }
         if (url.pathname === HOME_PATH) {
             return new Response(await Bun.file("./web/loged_in_page.html").bytes(), {
                 headers: {

@@ -111,7 +111,7 @@ function renderContent(content) {
         <div id="card_${id}" class="card 1">
             <div class="content-type" >${contentType}</div>
             <img class="movie-card-image" src="/web/content_img/${img_id}" ></img>
-            <div class="movie-card-text">${content_name}</div>
+            <div class="movie-card-text"><p>${content_name}</p></div>
         </div>
         `
         contentContainer.appendChild(element)
