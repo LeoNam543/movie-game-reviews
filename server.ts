@@ -118,15 +118,13 @@ const server = Bun.serve({
             `).run()
             return Response.redirect(HOME_PATH);
         }
-
-        if (url.pathname === "/api/editcontent"){
+        if (url.pathname === "/api/editcontent") {
             const formData = await req.formData()
             const fieldsData = formData.get('fields') as string;
-          
+
             if (!fieldsData) {
                 throw new Error()
             }
-            debugger
             const fields = JSON.parse(fieldsData)
             const contentId = fields.contentId
 
@@ -134,10 +132,10 @@ const server = Bun.serve({
             if (fileData) {
                 console.log(typeof fileData)
                 const file = await fileData.bytes();
-                
+
                 const res = db.query(`
                     select img_id from content where  id="${contentId}"`
-                ).get() as {img_id : string}
+                ).get() as { img_id: string }
 
                 const query = db.prepare(`update files set (data)=(?) where file_id="${res.img_id}"`);
                 query.values(file)
@@ -147,7 +145,6 @@ const server = Bun.serve({
             const contentName = fields.contentName
             const contentDesc = fields.contentDesc
             const contentType = fields.contentType
-            // debugger
             db.query(`
                 update content set content_name="${contentName}", content_description="${contentDesc}", content_type="${contentType}" where id="${contentId}"
                 `).run()
@@ -232,6 +229,61 @@ const server = Bun.serve({
             // }
             // console.log(formData.contentDesc)
         }
+        if (url.pathname === "/api/add_review") {
+            const p = await req.json();
+            if (!p.contentId || !p.review || !p.rating) {
+                throw new Error("Not everything submited")
+            }
+            const contId = p.contentId
+            const reviewText = p.review
+            const starRating = p.rating
+            const userId = getUserIdFromCookie(req, db);
+
+            db.query(`
+                insert into reviews (review, star_rating, user_id, content_id) values ("${reviewText}", "${starRating}", "${userId}", "${contId}")
+                `).run()
+            let asd = db.query(`
+                select * from reviews
+                `).all()
+            console.log(asd)
+            return new Response()
+        }
+        if (url.pathname === "/api/reviews_get") {
+            const { contentId } = await req.json();
+
+            const userId = getUserIdFromCookie(req, db)
+            // Get all reviews for the current content id excluding current user review
+            // as we are going to show it separately.
+            const reviews = db.query(`
+                select r.review, r.star_rating, u.nickname
+                from reviews r join user u on r.user_id = u.id
+                where r.content_id = ${contentId} and r.user_id != ${userId}
+                order by r.id desc
+                `).all() as { review: string, star_rating: number, user_id: number, content_id: number }[]
+
+            return new Response(JSON.stringify(reviews));
+        }
+        if (url.pathname === "/api/get_user_review_for_content") {
+            const { contentId } = await req.json();
+            const userId = getUserIdFromCookie(req, db)
+            const review = db.query(`
+                select r.review, r.star_rating, u.nickname
+                from reviews r join user u on r.user_id = u.id
+                where r.content_id = ${contentId} and r.user_id = ${userId}
+                `).get() as { review: string, star_rating: number, nickname: string } | undefined
+
+            return new Response(JSON.stringify({ review }));
+        }
+        if (url.pathname === "/api/delete_user_review_for_content") {
+            const { contentId } = await req.json();
+            const userId = getUserIdFromCookie(req, db)
+            db.query(`
+                delete from reviews
+                where content_id = ${contentId} and user_id = ${userId}
+                `).run()
+
+            return new Response();
+        }
 
         // Internal pages.
         if (url.pathname === ADD_CONTENT_PATH) {
@@ -249,7 +301,6 @@ const server = Bun.serve({
             if (!checkIsAdmin(req)) {
                 return Response.redirect(HOME_PATH);
             }
-            debugger
 
             return new Response(await Bun.file("./web/edit_content.html").bytes(), {
                 headers: {
@@ -324,4 +375,16 @@ function checkUserLoggedIn(req: Request): boolean {
         return false;
     }
     return true;
+}
+
+function getUserIdFromCookie(req: Request, db: Database) {
+    const cookieHeader = req.headers.get('cookie')
+    if (!cookieHeader) {
+        return false;
+    }
+    const sessionId = cookieHeader.split("=")[1]
+    const res = db.query(`
+                select user_id from session where session_id="${sessionId}"
+                `).get() as { user_id: number }
+    return res.user_id;
 }

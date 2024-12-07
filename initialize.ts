@@ -24,6 +24,12 @@ db.query(`
     drop table if exists content    
 `).run();
 
+// Drop reviews
+db.query(`
+    drop table if exists reviews    
+`).run();
+
+
 // Create user table.
 db.query(`
     create table if not exists user (
@@ -57,6 +63,7 @@ db.query(
     )`
 ).run();
 
+// Create content table
 // 0 = movie, 1 = game
 db.query(`
     create table if not exists content (
@@ -67,27 +74,40 @@ db.query(`
     img_id STRING NOT NULL )
     `).run()
 
-
+// Create reviews table
+db.query(`
+    create table if not exists reviews (
+    id INTEGER NOT NULL PRIMARY KEY,
+    review STRING NOT NULL,
+    star_rating STRING NOT NULL,
+    user_id INTEGER NOT NULL,
+    content_id INTEGER NOT NULL)
+    `).run()
 
 // Add admin user.
 db.query(`
     insert into user (nickname, email, password) values ("${adminName}", "${adminGmail}", "${adminPassword}")
-    `).get()
+    `).run()
 
 
-// Show users.
-let a = db.query(`
-    select * from user   
-`).all();
+/////////// For debugging //////////////
+// // Show users.
+// const users = db.query(`
+//     select * from users   
+// `).all();
+// console.log(users)
 
-// Show sessions.
-console.log(a)
+// // Show sessions.
+// const sessions = db.query(`
+//     select * from session   
+// `).all();
+// console.log(sessions)
 
-a = db.query(`
-    select * from session   
-`).all();
-
-console.log(a)
+// // Show reviews.
+// const reviews = db.query(`
+//     select * from reviews   
+//     `).all();
+// console.log(reviews)
 
 
 

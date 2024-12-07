@@ -4,13 +4,202 @@ const deleteContent = document.getElementById("deleteContent")
 const signOutlogoButton = document.getElementById("signOutlogoButton");
 const editContentBTN = document.getElementById("editContent");
 const editContentForm = document.getElementById("edit-content")
-
-const submitAdminEdit = document.getElementById("submit-edit")
-const contentTypeAdminEdit = document.getElementById("contentType-edit")
-const contentDescAdminEdit = document.getElementById("contentDescription-edit")
-const contentNameAdminEdit = document.getElementById("contentName-edit")
 const selectFileAdmiinEdit = document.getElementById("selectfile-edit")
+const reviewsContainer = document.getElementById("reviews-container")
+const addReviewForm = document.getElementById("add-user-review")
+const showReviewForm = document.getElementById("show-user-review")
+const showReviewFormContainer = document.getElementById("show-user-review-container")
+const deleteUserReviewBtn = document.getElementById("delete-user-review-btn")
 
+let stars =
+    document.getElementsByClassName("star");
+let output =
+    document.getElementById("rating-text");
+let rating = 0;
+
+const reviewInput = document.getElementById("review")
+const reviewSubmit = document.getElementById("submit-review")
+
+reviewSubmit.addEventListener('click', async () => {
+    const parts = window.location.pathname.split('/')
+    const contentId = parts[parts.length - 1]
+    const review = reviewInput.value;
+    if (!contentId || !review || !rating) {
+        errorMessage.innerText = 'Not everything submited.'
+        throw new Error('Not everything submited.')
+    }
+    try {
+        const res = await fetch("/api/add_review", {
+            verbose: true,
+            redirect: 'follow',
+            method: "POST",
+            body: JSON.stringify({ contentId, review, rating })
+        });
+
+        if (!res.ok) {
+            throw new Error();
+        }
+        location.reload();
+
+    } catch (e) {
+        errorMessage.innerText = 'Something went wrong.'
+    }
+})
+
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        await showAllContentReviews()
+        await showUserContentReview()
+        wireUpDeleteUserReviewBtn()
+
+    } catch (e) {
+        errorMessage.innerText = 'Something went wrong.'
+    }
+})
+
+function wireUpDeleteUserReviewBtn() {
+    if (!deleteUserReviewBtn) {
+        throw Error('No delete user reivew btn found.')
+    }
+
+    deleteUserReviewBtn.addEventListener('click', async () => {
+        const parts = window.location.pathname.split('/')
+        const contentId = parts[parts.length - 1]
+        if (!contentId) {
+            throw new Error()
+        }
+
+        const res = await fetch("/api/delete_user_review_for_content", {
+            verbose: true,
+            redirect: 'follow',
+            method: "POST",
+            body: JSON.stringify({ contentId })
+        });
+
+        if (!res.ok) {
+            throw new Error();
+        }
+
+        location.reload();
+    })
+}
+
+async function showUserContentReview() {
+    const parts = window.location.pathname.split('/')
+    const contentId = parts[parts.length - 1]
+    if (!contentId) {
+        throw new Error()
+    }
+
+    const res = await fetch("/api/get_user_review_for_content", {
+        verbose: true,
+        redirect: 'follow',
+        method: "POST",
+        body: JSON.stringify({ contentId })
+    });
+
+    if (!res.ok) {
+        throw new Error();
+    }
+    const { review } = await res.json()
+
+    renderUserReviewSection(review);
+}
+
+function renderUserReviewSection(r) {
+    if (!addReviewForm) {
+        throw new Error('No add review form found.')
+    }
+    if (!showReviewFormContainer) {
+        throw new Error('No show review form container found.')
+    }
+    if (!showReviewForm) {
+        throw new Error('No show review form found.')
+    }
+
+    if (!r) {
+        addReviewForm.classList.remove('hidden')
+        showReviewFormContainer.classList.add('hidden')
+        return;
+    }
+    addReviewForm.classList.add('hidden')
+    showReviewFormContainer.classList.remove('hidden')
+
+    showReviewForm.innerHTML = `
+      <div>
+          <div class="username">${r.nickname}</div>
+          <div class="star_rating">${r.star_rating}</div>
+      </div>
+      <div class="review_text">${r.review}</div>
+  `
+}
+
+async function showAllContentReviews() {
+    const parts = window.location.pathname.split('/')
+    const contentId = parts[parts.length - 1]
+    if (!contentId) {
+        throw new Error()
+    }
+
+    const res = await fetch("/api/reviews_get", {
+        verbose: true,
+        redirect: 'follow',
+        method: "POST",
+        body: JSON.stringify({ contentId })
+    });
+
+    if (!res.ok) {
+        throw new Error();
+    }
+    const reviews = await res.json()
+
+    renderReviews(reviews)
+}
+
+function renderReviews(reviews) {
+    if (!reviewsContainer) {
+        throw new Error('No reviews contaner found')
+    }
+
+    if (!reviews.length) {
+        reviewsContainer.innerHTML = '<div>No other reviews found.</div>'
+        return;
+    }
+
+    let reviewsHtml = '';
+    for (const r of reviews) {
+        reviewsHtml += `
+          <div class="review">
+            <div>
+                <div class="username">${r.nickname}</div>
+                <div class="star_rating">${r.star_rating}</div>
+            </div>
+            <div class="review_text">${r.review}</div>
+        </div>
+        `
+    }
+    reviewsContainer.innerHTML = reviewsHtml;
+}
+
+
+// Funtion to update rating
+function updateRating(n) {
+    // Max amount of stars.
+    const maxN = 5;
+    remove(maxN);
+    for (let i = 0; i < n; i++) {
+        stars[i].className = "star colored";
+    }
+    output.innerText = "Rating: " + n + "/5";
+    rating = n
+}
+
+// To remove the pre-applied styling
+function remove(maxN) {
+    for (let i = 0; i < maxN; i++) {
+        stars[i].className = "star";
+    }
+}
 
 let fileArrayBufferPromise;
 if (selectFileAdmiinEdit) {
@@ -18,43 +207,6 @@ if (selectFileAdmiinEdit) {
         fileArrayBufferPromise = readFileDataAsBase64(e);
     });
 }
-
-// submitAdminEdit.addEventListener('click', async (e) => {
-//     const parts = window.location.pathname.split('/')
-//     const contentId = parts[parts.length - 1]
-//     contentType = contentTypeAdminEdit.value
-//     contentDesc = contentDescAdminEdit.value
-//     contentName = contentNameAdminEdit.value
-//     const fileArrayBuffer = await fileArrayBufferPromise;
-
-//     if (!fileArrayBuffer || !contentName || !contentDesc || !contentType) {
-//         errorMessage.innerText = 'Fill out the form fully.'
-//         throw new Error("Fill out the form fully")
-//     }
-
-//     try {
-//         var fd = new FormData()
-//         fd.append('fields', JSON.stringify({ contentName, contentDesc, contentType, contentId }))
-//         fd.append('file', new Blob([fileArrayBuffer]))
-
-//         const res = await fetch("/api/editcontent", {
-//             verbose: true,
-//             redirect: 'follow',
-//             method: "POST",
-//             body: fd
-//         });
-
-//         if (!res.ok) {
-//             throw new Error();
-//         }
-
-//         if (res.redirected) {
-//             window.location.href = res.url;
-//         }
-//     } catch (e) {
-//         errorMessage.innerText = 'Something went wrong.'
-//     }
-// });
 
 
 

@@ -1,43 +1,45 @@
-
-*{
+* {
     margin: 0;
     border: 0;
-    color: aliceblue;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bold;
 }
 
+.hidden {
+    display: none !important;
+}
 
-header{
+
+header {
     height: 100px;
     background-color: rgb(37, 37, 37);
     display: flex;
     align-items: center;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
-    justify-content:flex-end;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    justify-content: flex-end;
 }
 
-.headercontent{
+.headercontent {
     width: 54.5%;
     display: flex;
-    flex-direction:row;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
 }
 
-a{
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+a {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 20px;
     text-decoration: none;
     color: rgba(240, 248, 255, 0.726);
 
 }
 
-a:hover{
+a:hover {
     color: rgb(158, 0, 0);
 }
 
-.content_container{
+.content_container {
     border: white solid 2px;
     width: 80%;
     /* height: 400px; */
@@ -48,7 +50,63 @@ a:hover{
     padding: 10px;
 }
 
-.content-page-wrapper{
+textarea {
+    resize: none;
+    outline: none;
+}
+
+.review-form {
+    border: rgb(255, 255, 255) solid 5px;
+    padding-top: 30px;
+    background-color: rgb(43, 43, 43);
+    justify-self: center;
+    width: 102vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.review-form p {
+    font-size: 30px;
+    color: white;
+    text-align: center;
+}
+
+.review-form .review {
+    height: 200px;
+    width: 50%;
+    align-self: center;
+}
+
+.star {
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    font-size: 5vh;
+}
+
+.colored {
+    color: rgb(251, 255, 0);
+}
+
+.stars {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.reviews-container {
+    border: white solid 2px;
+    width: 80%;
+    justify-self: center;
+}
+
+.content-type {
+    color: white;
+}
+
+.content-page-wrapper {
     /* border: white solid 2px; */
     height: 900px;
     display: flex;
@@ -58,37 +116,40 @@ a:hover{
     padding-left: 30px;
     padding-right: 30px;
 }
-.content-page-poster{
+
+.content-page-poster {
     /* border: white solid 2px; */
     height: 65vh;
     width: 45vh;
-    overflow:hidden;
+    overflow: hidden;
 }
 
-.content-page-poster-edit{
+.content-page-poster-edit {
     /* border: white solid 2px; */
     height: 65vh;
     width: 45vh;
-    overflow:hidden;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.content-page-desc{
+.content-page-desc {
     /* border: white solid 2px; */
     display: flex;
+    color: white;
     justify-content: center;
     flex-direction: column;
     align-items: center;
 }
 
-.content-page-title{
+.content-page-title {
+    color: white;
     display: flex;
     flex-direction: row;
 }
 
-.RHS-edit{
+.RHS-edit {
     /* border: rgb(255, 0, 0) solid 2px; */
     display: flex;
     flex-direction: column;
@@ -99,7 +160,7 @@ a:hover{
 }
 
 
-.RHS{
+.RHS {
     /* border: rgb(255, 0, 0) solid 2px; */
     display: flex;
     flex-direction: column;
@@ -109,10 +170,13 @@ a:hover{
 
 }
 
+.signin_btn {
+    color: black;
+}
 
-.content-page-name{
+.content-page-name {
     justify-content: center;
-    display:flex;
+    display: flex;
     align-items: center;
     font-size: 25px;
     width: 90%;
@@ -121,12 +185,14 @@ a:hover{
     height: 100px;
     /* border: white solid 2px; */
 }
-.content-page-rating{
+
+.content-page-rating {
+    color: white;
     border: white solid 2px;
     width: 100px;
 }
 
-.card{
+.card {
     border: 2px white solid;
     width: 250px;
     /* height: 350px; */
@@ -136,7 +202,8 @@ a:hover{
     align-items: center;
 }
 
-.movie-card-text{
+.movie-card-text {
+    color: white;
     text-wrap: wrap;
     word-break: break-all;
 }
@@ -148,18 +215,18 @@ a:hover{
     overflow: hidden;
 }
 
-.edit-content .content_name{
+.edit-content .content_name {
     width: 350px;
 }
 
-.edit-content .content-select{
+.edit-content .content-select {
     width: 370px;
     color: black;
     text-align: center;
     height: 30px;
 }
 
-.edit-content{
+.edit-content {
     color: black;
     justify-content: center;
     align-items: center;
@@ -170,7 +237,7 @@ a:hover{
     gap: 20px;
 }
 
-.addcontent{ 
+.addcontent {
     color: black;
     justify-content: center;
     align-items: center;
@@ -181,32 +248,36 @@ a:hover{
     flex-direction: column;
     gap: 20px;
 }
-.addcontent select{
+
+.addcontent select {
     color: black;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     width: 350px;
     height: 30px;
     text-align: center;
     outline: none;
 }
-.addcontent p{
+
+.addcontent p {
     color: aliceblue;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     width: 270px;
     text-align: center;
     margin-bottom: 5px;
     font-weight: bold;
 }
-.selectfile{
+
+.selectfile {
     color: aliceblue;
     height: 25px;
 }
-.addcontent input{
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+
+.addcontent input {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     width: 350px;
 }
 
-.posterwrapperedit{
+.posterwrapperedit {
     display: flex;
     width: 350px;
     flex-direction: column;
@@ -214,7 +285,7 @@ a:hover{
     justify-content: center;
 }
 
-.posterwrapper{
+.posterwrapper {
     display: flex;
     width: 350px;
     flex-direction: column;
@@ -222,13 +293,13 @@ a:hover{
     justify-content: center;
 }
 
-.content-select-edit{
+.content-select-edit {
     color: black;
     width: 100px;
     height: 30px;
 }
 
-.content-select-edit-wrapper{
+.content-select-edit-wrapper {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -237,7 +308,7 @@ a:hover{
     flex-direction: column;
 }
 
-.content_description_edit{
+.content_description_edit {
     font-weight: bold;
     color: black;
     width: 400px;
@@ -247,7 +318,7 @@ a:hover{
     outline: none;
 }
 
-.content_description{
+.content_description {
     font-weight: bold;
     color: black;
     width: 350px;
@@ -256,20 +327,21 @@ a:hover{
     padding-left: 20px;
     outline: none;
 }
-.content_name{
+
+.content_name {
     color: black;
     display: flex;
     height: 30px;
 }
 
-.content_name_edit{
+.content_name_edit {
     color: black;
     display: flex;
     height: 30px;
     width: 400px;
 }
 
-.maincontent{
+.maincontent {
     width: 100%;
     height: 100%;
     display: flex;
@@ -277,7 +349,7 @@ a:hover{
     align-items: center;
 }
 
-.text_content{
+.text_content {
     width: 100%;
     height: 100px;
     justify-content: center;
@@ -286,19 +358,19 @@ a:hover{
     align-items: center;
 }
 
-.select_genre_text{
+.select_genre_text {
     color: rgba(255, 255, 255, 0.726);
-    font-family:Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 30px;
     margin-bottom: 10px;
 }
 
 
-.genre-select{
+.genre-select {
     outline: none;
     border: none;
     cursor: pointer;
-    border-radius:6px;
+    border-radius: 6px;
     background-color: aliceblue;
     color: rgb(119, 0, 0);
     font-weight: bold;
@@ -309,29 +381,29 @@ a:hover{
     text-align: center;
 }
 
-.allcontent{
+.allcontent {
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
 }
 
-body{
+body {
     overflow-x: hidden;
     background-color: rgb(54, 54, 54);
-    
+
 }
 
-.SignInPageButton{
+.SignInPageButton {
     width: 60px;
 }
 
-.SignInPageButton:hover{
+.SignInPageButton:hover {
     transform: scale(1.03);
     transition: transform 0.2s;
 }
 
-.FormSection{
+.FormSection {
     height: 600px;
     display: flex;
     width: 100%;
@@ -341,23 +413,27 @@ body{
     flex-direction: column;
 }
 
-.FormSection h1{
+.FormSection h1 {
     color: aliceblue;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.content-page-title-edit{
+.content-page-title-edit {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.editContent{
+.edit-content p {
+    color: white;
+}
+
+.editContent {
     margin-top: 10px;
     margin-bottom: 10px;
     color: rgb(255, 240, 240);
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: rgb(158, 0, 0);
     padding-left: 30px;
     padding-right: 30px;
@@ -368,17 +444,17 @@ body{
     width: 230px;
 }
 
-.edit-page-sign{
+.edit-page-sign {
     margin-top: 10px;
     font-size: 30px;
 }
 
-.edit-page-sign-wrapper{
+.edit-page-sign-wrapper {
     display: flex;
     justify-content: center;
 }
 
-.contentPageAdminBtns{
+.contentPageAdminBtns {
     display: flex;
     justify-content: center;
     flex-direction: row;
@@ -387,18 +463,18 @@ body{
     width: 102vh;
 }
 
-.editContent:hover{
+.editContent:hover {
     transform: scale(1.03);
     transition: transform 0.2s;
     cursor: pointer;
     background-color: rgb(139, 0, 0);
 }
 
-.deleteContent{
+.deleteContent {
     margin-top: 10px;
     margin-bottom: 10px;
     color: rgb(255, 240, 240);
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: rgb(158, 0, 0);
     padding-left: 30px;
     padding-right: 30px;
@@ -409,14 +485,14 @@ body{
     width: 230px;
 }
 
-.deleteContent:hover{
+.deleteContent:hover {
     transform: scale(1.03);
     transition: transform 0.2s;
     cursor: pointer;
     background-color: rgb(139, 0, 0);
 }
 
-.addreview_profile{
+.addreview_profile {
     margin-right: 10px;
     display: flex;
     width: 180px;
@@ -427,39 +503,40 @@ body{
 
 }
 
-.wrapper_movies_games{
+.wrapper_movies_games {
     display: flex;
     justify-content: center;
     justify-self: center;
     gap: 20px;
 }
 
-.addreviewbtn{
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+.addreviewbtn {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     width: 115px;
     height: 40px;
-    border-radius:6px;
+    border-radius: 6px;
     color: rgb(255, 255, 255);
     background: none;
     text-decoration: none;
     border: 2px solid white;
 }
 
-.signOutlogoButton{
+.signOutlogoButton {
     width: 30px;
     border: 2px white solid;
     padding: 5px;
     border-radius: 10px;
 }
-.signOutlogoButton:hover{
+
+.signOutlogoButton:hover {
     transform: scale(1.03);
     transition: transform 0.2s;
     cursor: pointer;
 }
 
-.createpostbutton{
+.submit-review {
     color: rgb(255, 240, 240);
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: rgb(158, 0, 0);
     padding-left: 30px;
     padding-right: 30px;
@@ -469,7 +546,26 @@ body{
     width: 300px;
 }
 
-.createpostbutton:hover{
+.submit-review:hover {
+    transform: scale(1.03);
+    transition: transform 0.2s;
+    cursor: pointer;
+    background-color: rgb(139, 0, 0);
+}
+
+.createpostbutton {
+    color: rgb(255, 240, 240);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(158, 0, 0);
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 20px;
+    width: 300px;
+}
+
+.createpostbutton:hover {
     transform: scale(1.03);
     transition: transform 0.2s;
     cursor: pointer;
@@ -477,46 +573,48 @@ body{
 }
 
 
-.addreviewbtn:hover{
+.addreviewbtn:hover {
     transform: scale(1.03);
     transition: transform 0.2s;
     cursor: pointer;
 }
 
-.homepagebtn{
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+.homepagebtn {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     width: 115px;
     height: 40px;
-    border-radius:6px;
+    border-radius: 6px;
     color: rgb(255, 255, 255);
     background: none;
     text-decoration: none;
     border: 2px solid white;
 }
-.homepagebtn:hover{
+
+.homepagebtn:hover {
     transform: scale(1.03);
     transition: transform 0.2s;
     cursor: pointer;
 }
 
-.addcontentbtn{
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+.addcontentbtn {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     width: 115px;
     height: 40px;
-    border-radius:6px;
+    border-radius: 6px;
     color: rgb(255, 255, 255);
     background: none;
     text-decoration: none;
     border: 2px solid white;
     display: none;
 }
-.addcontentbtn:hover{
+
+.addcontentbtn:hover {
     transform: scale(1.03);
     transition: transform 0.2s;
     cursor: pointer;
 }
 
-.SignIn{
+.SignIn {
     height: 100px;
     display: flex;
     flex-direction: column;
@@ -525,12 +623,12 @@ body{
     box-sizing: border-box;
 }
 
-.errorMessage{
+.errorMessage {
     color: white;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.Register{
+.Register {
     height: 250px;
     display: flex;
     flex-direction: column;
@@ -540,7 +638,7 @@ body{
     align-items: center;
 }
 
-input{
+input {
     width: 400px;
     height: 300px;
     font-size: large;
@@ -548,9 +646,9 @@ input{
     outline: none;
 }
 
-.SignInButton{
+.SignInButton {
     color: rgb(255, 240, 240);
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: rgb(158, 0, 0);
     padding-left: 30px;
     padding-right: 30px;
@@ -558,23 +656,25 @@ input{
     padding-bottom: 10px;
     font-size: 20px;
 }
-.SignInButton:hover{
+
+.SignInButton:hover {
     transform: scale(1.03);
     transition: transform 0.2s;
     cursor: pointer;
 }
 
-.CreateAccountButton{
+.CreateAccountButton {
     color: rgb(255, 240, 240);
     text-decoration: underline;
 }
-.CreateAccountButton:hover{
+
+.CreateAccountButton:hover {
     cursor: pointer;
 }
 
-.signin_btn{
+.signin_btn {
     color: rgb(255, 240, 240);
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: rgb(158, 0, 0);
     padding-left: 30px;
     padding-right: 30px;
@@ -584,15 +684,15 @@ input{
     width: 300px;
 }
 
-.signin_btn:hover{
+.signin_btn:hover {
     transform: scale(1.03);
     transition: transform 0.2s;
     cursor: pointer;
 }
 
-.RegisterAccountButton{
+.RegisterAccountButton {
     color: rgb(255, 240, 240);
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: rgb(158, 0, 0);
     padding-left: 30px;
     padding-right: 30px;
@@ -601,7 +701,8 @@ input{
     font-size: 20px;
     width: 300px;
 }
-.RegisterAccountButton:hover{
+
+.RegisterAccountButton:hover {
     transform: scale(1.03);
     transition: transform 0.2s;
     cursor: pointer;
