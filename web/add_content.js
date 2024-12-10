@@ -14,7 +14,7 @@ if(poster){
     });    
 }
 
-
+//posting
 
 postButton.addEventListener('click', (e) => post());
 async function post() {
