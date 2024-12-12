@@ -9,13 +9,100 @@ const reviewsContainer = document.getElementById("reviews-container")
 const addReviewForm = document.getElementById("add-user-review")
 const showReviewForm = document.getElementById("show-user-review")
 const showReviewFormContainer = document.getElementById("show-user-review-container")
-const deleteUserReviewBtn = document.getElementById("delete-user-review-btn")
+const deleteUserReviewBtn = document.getElementById("delete-user-review-btn") 
+
+const editUserReview = document.getElementById("submit-edit-review") 
+
+const editUserReviewForm = document.getElementById("edit-user-review")
+const showEditUserReviewBtn = document.getElementById("edit-user-review-btn")
+const userReviewValue = document.getElementById("edit-review")
+
+
+// EDIT REVIEW
+editUserReview.addEventListener('click', async () => {
+    const parts = window.location.pathname.split('/')
+    const contentId = parts[parts.length - 1]
+
+    const review = userReviewValue.value;
+    if (!contentId || !review || !editRating) {
+        errorMessage.innerText = 'Not everything submited.'
+        throw new Error('Not everything submited.')
+    }
+    try {
+        const res = await fetch("/api/edit_user_review", {
+            verbose: true,
+            redirect: 'follow',
+            method: "POST",
+            body: JSON.stringify({ contentId, review, editRating })
+        });
+
+        if (!res.ok) {
+            throw new Error();
+        }
+        location.reload();
+
+    } catch (e) {
+        errorMessage.innerText = 'Something went wrong.'
+    }
+})
+
+showEditUserReviewBtn.addEventListener('click', async () => {
+    editUserReviewForm.style.display = "flex"
+    const parts = window.location.pathname.split('/')
+    const contentId = parts[parts.length - 1]
+    try {
+        const res = await fetch("/api/get_specific_review", {
+            verbose: true,
+            redirect: 'follow',
+            method: "POST",
+            body: contentId
+        });
+
+        if (!res.ok) {
+            throw new Error();
+        }
+        const resJson = await res.json()
+        console.log(resJson)
+
+        userReviewValue.value = resJson.content.review
+        editupdateRating(resJson.content.star_rating)
+
+    } catch (e) {
+        errorMessage.innerText = 'Something went wrong.'
+    }
+})
+
 
 let stars =
     document.getElementsByClassName("star");
+let edstars =
+    document.getElementsByClassName("edstar");
+
 let output =
     document.getElementById("rating-text");
-let rating = 0;
+let edoutput =
+    document.getElementById("edit-rating-text");
+
+let rating = 0; 
+let editRating = 0; 
+
+function editupdateRating(n) {
+    // Max amount of stars.
+    const maxN = 5;
+    edremove(maxN);
+    for (let i = 0; i < n; i++) {
+        edstars[i].className = "edstar colored";
+    }
+    edoutput.innerText = "Rating: " + n + "/5";
+    editRating = n
+}
+
+// To remove the pre-applied styling
+function edremove(maxN) {
+    for (let i = 0; i < maxN; i++) {
+        edstars[i].className = "edstar";
+    }
+}
 
 const reviewInput = document.getElementById("review")
 const reviewSubmit = document.getElementById("submit-review")
@@ -84,6 +171,8 @@ function wireUpDeleteUserReviewBtn() {
     })
 }
 
+
+
 async function showUserContentReview() {
     const parts = window.location.pathname.split('/')
     const contentId = parts[parts.length - 1]
@@ -126,9 +215,9 @@ function renderUserReviewSection(r) {
     showReviewFormContainer.classList.remove('hidden')
 
     showReviewForm.innerHTML = `
-      <div>
+      <div class="username-star-container">
           <div class="username">${r.nickname}</div>
-          <div class="star_rating">${r.star_rating}</div>
+          <div class="star_rating">${r.star_rating}/5</div>
       </div>
       <div class="review_text">${r.review}</div>
   `

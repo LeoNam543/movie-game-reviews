@@ -103,6 +103,16 @@ const server = Bun.serve({
                 `).get() as { content_name: string, content_description: string, content_type: number, img_id: string }[]
             return Response.json({ content: res })
         }
+
+        if (url.pathname === '/api/get_specific_review') {
+            const userId = getUserIdFromCookie(req, db);
+            const contentId = await req.text()
+            const res = db.query(`
+                select review, star_rating from reviews where (content_id="${contentId}" and user_id="${userId}")
+                `).get() as { review: string, star_rating: number}[]
+            return Response.json({ content: res })
+        }
+
         if (url.pathname === '/api/delete-content') {
             const contentId = await req.text()
             const res = db.query(`
@@ -211,8 +221,8 @@ const server = Bun.serve({
             }
 
             db.query(`
-                insert into content (content_name, content_description, content_type, img_id)
-                values ("${contentName}", "${contentDesc}", "${contentType}", "${fileId}")
+                insert into content (content_name, content_description, content_type, img_id, average_rating)
+                values ("${contentName}", "${contentDesc}", "${contentType}", "${fileId}", ${0})
                 `).run()
 
             const contentTable = db.query(`
@@ -239,14 +249,42 @@ const server = Bun.serve({
             const starRating = p.rating
             const userId = getUserIdFromCookie(req, db);
 
+            const amountReviews = db.query(`
+                select count(*) as count from reviews where user_id="${userId}" and content_id="${contId}"
+                `).get() as { count : number }
+            if (amountReviews.count > 0) {
+                throw new Error("review already exists")
+            }
             db.query(`
-                insert into reviews (review, star_rating, user_id, content_id) values ("${reviewText}", "${starRating}", "${userId}", "${contId}")
+                insert into reviews (review, star_rating, user_id, content_id) values ("${reviewText}", ${starRating}, "${userId}", "${contId}")
                 `).run()
             let asd = db.query(`
                 select * from reviews
                 `).all()
             console.log(asd)
+
+            updateContentRating(db, contId)
+
             return new Response()
+        }
+
+        if (url.pathname === "/api/edit_user_review") {
+            const p = await req.json();
+            if (!p.contentId || !p.review || !p.editRating) {
+                throw new Error("Not everything submited")
+            }
+            const contId = p.contentId
+            const reviewText = p.review
+            const starRating = p.editRating
+            const userId = getUserIdFromCookie(req, db);
+
+            const query = db.prepare(`update reviews set (review, star_rating)=(?, ?) where (content_id="${contId}" and user_id="${userId}")`);
+            query.values(reviewText, starRating)
+            query.run()
+            updateContentRating(db, contId)
+
+            return new Response()
+            
         }
         if (url.pathname === "/api/reviews_get") {
             const { contentId } = await req.json();
@@ -281,6 +319,8 @@ const server = Bun.serve({
                 delete from reviews
                 where content_id = ${contentId} and user_id = ${userId}
                 `).run()
+            
+                updateContentRating(db, contentId)
 
             return new Response();
         }
@@ -387,4 +427,17 @@ function getUserIdFromCookie(req: Request, db: Database) {
                 select user_id from session where session_id="${sessionId}"
                 `).get() as { user_id: number }
     return res.user_id;
+}
+
+function updateContentRating(db: Database, contentId: number) {
+    const avgRating = db.query(`
+        select avg(star_rating) as average from reviews where content_id="${contentId}"
+        `).get() as { average : number }
+    db.query(`
+        update content set average_rating=${avgRating.average} where id="${contentId}"
+        `).run()
+    const avgshow = db.query(`
+        select * from content
+        `).all()
+    debugger
 }

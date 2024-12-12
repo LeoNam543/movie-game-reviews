@@ -71,7 +71,8 @@ db.query(`
     content_name STRING NOT NULL,
     content_description STRING NOT NULL,
     content_type INTEGER NOT NULL,
-    img_id STRING NOT NULL )
+    img_id STRING NOT NULL,
+    average_rating REAL NOT NULL)
     `).run()
 
 // Create reviews table
@@ -79,7 +80,7 @@ db.query(`
     create table if not exists reviews (
     id INTEGER NOT NULL PRIMARY KEY,
     review STRING NOT NULL,
-    star_rating STRING NOT NULL,
+    star_rating INTEGER NOT NULL,
     user_id INTEGER NOT NULL,
     content_id INTEGER NOT NULL)
     `).run()
@@ -103,11 +104,11 @@ db.query(`
 // `).all();
 // console.log(sessions)
 
-// // Show reviews.
-// const reviews = db.query(`
-//     select * from reviews   
-//     `).all();
-// console.log(reviews)
+// Show reviews.
+const reviews = db.query(`
+    select * from reviews   
+    `).all();
+console.log(reviews)
 
 
 

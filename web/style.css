@@ -9,6 +9,71 @@
     display: none !important;
 }
 
+.username{
+    color: white;
+    font-size: 30px;
+}
+.star_rating{
+    font-size: 30px;
+    color: white;
+}
+.review_text{
+    color: white;
+}
+.username-star-container{
+    display: flex;
+    gap: 30px;
+}
+
+.edit-review-buttons{
+    display: flex;
+    gap: 20px;
+}
+
+.show-user-review{
+    background-color: rgb(39, 39, 39);
+    border: rgb(112, 112, 112) solid 2px;
+    width: 100vh;
+    justify-self: center;
+    padding: 10px;
+}
+.delete-user-review-btn{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: rgb(255, 240, 240);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(158, 0, 0);
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 20px;
+    width: 230px;
+}
+
+.delete-user-review-btn:hover{
+    cursor: pointer;
+    transform: scale(1.03);
+    transition: transform 0.2s;
+}
+.edit-user-review-btn{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: rgb(255, 240, 240);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(158, 0, 0);
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 20px;
+    width: 230px;
+}
+.edit-user-review-btn:hover{
+    cursor: pointer;
+    transform: scale(1.03);
+    transition: transform 0.2s;
+}
 
 header {
     height: 100px;
@@ -56,7 +121,7 @@ textarea {
 }
 
 .review-form {
-    border: rgb(255, 255, 255) solid 5px;
+    border: rgb(112, 112, 112) solid 5px;
     padding-top: 30px;
     background-color: rgb(43, 43, 43);
     justify-self: center;
@@ -68,10 +133,33 @@ textarea {
     gap: 10px;
 }
 
+.edit-review-form {
+    border: rgb(112, 112, 112) solid 5px;
+    padding-top: 30px;
+    background-color: rgb(43, 43, 43);
+    justify-self: center;
+    width: 102vh;
+    display: none;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+.edit-review-form p {
+    font-size: 30px;
+    color: white;
+    text-align: center;
+}
+
 .review-form p {
     font-size: 30px;
     color: white;
     text-align: center;
+}
+.edit-review-form .edit-review{
+    height: 200px;
+    width: 50%;
+    align-self: center;
 }
 
 .review-form .review {
@@ -81,6 +169,11 @@ textarea {
 }
 
 .star {
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    font-size: 5vh;
+}
+.edstar {
     color: rgb(255, 255, 255);
     cursor: pointer;
     font-size: 5vh;
@@ -97,8 +190,9 @@ textarea {
 }
 
 .reviews-container {
-    border: white solid 2px;
-    width: 80%;
+    border: rgb(112, 112, 112) solid 2px;
+    width: 100vh;
+    padding: 10px;
     justify-self: center;
 }
 
@@ -113,6 +207,7 @@ textarea {
     flex-direction: row;
     padding: 10px;
     background-color: rgb(43, 43, 43);
+    border: rgb(112, 112, 112) solid 2px;
     padding-left: 30px;
     padding-right: 30px;
 }
@@ -347,6 +442,7 @@ textarea {
     display: flex;
     flex-direction: column;
     align-items: center;
+
 }
 
 .text_content {
@@ -391,7 +487,6 @@ textarea {
 body {
     overflow-x: hidden;
     background-color: rgb(54, 54, 54);
-
 }
 
 .SignInPageButton {
@@ -533,8 +628,21 @@ body {
     transition: transform 0.2s;
     cursor: pointer;
 }
+.submit-edit-review {
+    color: rgb(255, 240, 240);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(158, 0, 0);
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 20px;
+    width: 300px;
+    margin-bottom: 10px;
+}
 
 .submit-review {
+    margin-bottom: 10px;
     color: rgb(255, 240, 240);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: rgb(158, 0, 0);

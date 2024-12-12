@@ -32,6 +32,7 @@
 
     </div>
     <div>
+        <!-- review form -->
         <div class="review-form" id="add-user-review">
             <p>Leave a review!</p>
             <textarea class="review" type="text" id="review" placeholder="Leave your review"></textarea>
@@ -45,10 +46,28 @@
             <p id="rating-text" class="rating-text">Rating:</p>
             <button class="submit-review" id="submit-review">Submit</button>
         </div>
+        <!-- edit review form -->
+        <div class="edit-review-form" id="edit-user-review">
+            <p>Edit your review!</p>
+            <textarea class="edit-review" type="text" id="edit-review" placeholder="Edit your review"></textarea>
+            <div class="stars">
+                <span class="edstar" onclick="editupdateRating(1)">★</span>
+                <span class="edstar" onclick="editupdateRating(2)">★</span>
+                <span class="edstar" onclick="editupdateRating(3)">★</span>
+                <span class="edstar" onclick="editupdateRating(4)">★</span>
+                <span class="edstar" onclick="editupdateRating(5)">★</span>
+            </div>
+            <p id="edit-rating-text" class="edit-rating-text">Rating:</p>
+            <button class="submit-edit-review" id="submit-edit-review">Submit</button>
+        </div>
 
-        <div id="show-user-review-container">
+        <div id="show-user-review-container" class="show-user-review">
             <div class="review" id="show-user-review"></div>
-            <button id="delete-user-review-btn">Delete review</button>
+            <div class="edit-review-buttons">
+                <button class="delete-user-review-btn" id="delete-user-review-btn">Delete review</button>
+                <button class="edit-user-review-btn" id="edit-user-review-btn">Edit review</button>
+            </div>
+
         </div>
     </div>
 
