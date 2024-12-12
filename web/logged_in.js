@@ -1,7 +1,7 @@
 const signOutlogoButton = document.getElementById("signOutlogoButton");
 const addContentButton = document.getElementById("addcontentbtn")
 const contentContainer = document.getElementById("content_container")
-
+const errorMessage = document.getElementById("errorMessage")
 
 addContentButton.addEventListener('click', (e) => {
     window.location.href = "/addcontent"
@@ -93,8 +93,8 @@ function addContentListeners(content) {
 
 function renderContent(content) {
     for (const media of content) {
-        const {id, img_id, content_name, content_type} = media;
-        if (!id || !img_id || !content_name || !content_type) {
+        const {id, img_id, content_name, content_type, average_rating} = media;
+        if (!id || !img_id || !content_name || !content_type || average_rating==null) {
             throw new Error("Not all content info received")
         }
         if (!contentContainer) {
@@ -111,7 +111,7 @@ function renderContent(content) {
         <div id="card_${id}" class="card 1">
             <div class="content-type" >${contentType}</div>
             <img class="movie-card-image" src="/web/content_img/${img_id}" ></img>
-            <div class="movie-card-text"><p>${content_name}</p></div>
+            <div class="movie-card-text"><p>${content_name} ★${average_rating}</p></div>
         </div>
         `
         contentContainer.appendChild(element)

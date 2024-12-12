@@ -137,17 +137,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         await showAllContentReviews()
         await showUserContentReview()
-        wireUpDeleteUserReviewBtn()
+        // wireUpDeleteUserReviewBtn()       
 
     } catch (e) {
         errorMessage.innerText = 'Something went wrong.'
     }
 })
 
-function wireUpDeleteUserReviewBtn() {
-    if (!deleteUserReviewBtn) {
-        throw Error('No delete user reivew btn found.')
-    }
+
 
     deleteUserReviewBtn.addEventListener('click', async () => {
         const parts = window.location.pathname.split('/')
@@ -166,10 +163,9 @@ function wireUpDeleteUserReviewBtn() {
         if (!res.ok) {
             throw new Error();
         }
-
         location.reload();
     })
-}
+
 
 
 
@@ -430,8 +426,8 @@ editContentBTN.addEventListener('click', async () => {
 
 
 function renderContent(media) {
-    const { content_name, content_description, content_type, img_id } = media;
-    if (!img_id || !content_name || !content_type || !content_description) {
+    const { content_name, content_description, content_type, img_id, average_rating } = media;
+    if (!img_id || !content_name || !content_type || !content_description || average_rating==null) {
         throw new Error("Not all content info received")
     }
     if (!mainContent) {
@@ -450,7 +446,7 @@ function renderContent(media) {
             <div class="RHS">
                 <div class="content-page-title">
                     <div class="content-page-name">${content_name} ${contentType}</div>
-                    <div class="content-page-rating"></div>
+                    <div class="content-page-rating">★${average_rating}</div>
                 </div>
                 <div class="content-page-desc">${content_description}</div>
             </div>

@@ -236,6 +236,7 @@ textarea {
     justify-content: center;
     flex-direction: column;
     align-items: center;
+
 }
 
 .content-page-title {
@@ -283,7 +284,10 @@ textarea {
 
 .content-page-rating {
     color: white;
-    border: white solid 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
     width: 100px;
 }
 

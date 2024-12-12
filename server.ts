@@ -99,8 +99,8 @@ const server = Bun.serve({
         if (url.pathname === '/api/get_specific_content') {
             const contentId = await req.text()
             const res = db.query(`
-                select content_name, content_description, content_type, img_id from content where id="${contentId}"
-                `).get() as { content_name: string, content_description: string, content_type: number, img_id: string }[]
+                select content_name, content_description, content_type, img_id, average_rating from content where id="${contentId}"
+                `).get() as { content_name: string, content_description: string, content_type: number, img_id: string, average_rating: number }[]
             return Response.json({ content: res })
         }
 
@@ -180,8 +180,8 @@ const server = Bun.serve({
         if (url.pathname === '/api/get_content') {
             console.log("get content")
             const res = db.query(`
-                select id, content_name, img_id, content_type from content
-                `).all() as { id: string, content_name: string, img_id: string, content_type: number }[]
+                select id, content_name, img_id, content_type, average_rating from content
+                `).all() as { id: string, content_name: string, img_id: string, content_type: number, average_rating: number}[]
             return Response.json({ content: res })
         }
         if (url.pathname === '/api/addcontent') {
@@ -431,7 +431,7 @@ function getUserIdFromCookie(req: Request, db: Database) {
 
 function updateContentRating(db: Database, contentId: number) {
     const avgRating = db.query(`
-        select avg(star_rating) as average from reviews where content_id="${contentId}"
+        select coalesce(avg(star_rating), ${0}) as average from reviews where content_id="${contentId}"
         `).get() as { average : number }
     db.query(`
         update content set average_rating=${avgRating.average} where id="${contentId}"
@@ -439,5 +439,4 @@ function updateContentRating(db: Database, contentId: number) {
     const avgshow = db.query(`
         select * from content
         `).all()
-    debugger
 }
