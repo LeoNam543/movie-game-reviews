@@ -16,19 +16,19 @@ cd path/to/project/movie-game-reviews
 bun install
 ```
 4) Add admin credentials file:
-Create file in the project directory `movie-game-reviews\admin_credentials.ts` with following content
+Create file in the project directory `movie-game-reviews/admin_credentials.ts` with following content
 ```bash
 export const adminName = "AdminUser"
 export const adminGmail = "admin@gmail.com"
 export const adminPassword = "admin123"
 ```
 5) Replace fields with your admin credentials.
-6) Open and run `movie-game-reviews\initialize.ts` file to initialise database
+6) Open and run `movie-game-reviews/initialize.ts` file to initialise database
 
 Note: Admin credentials added this way to avoid exposing them on Github.
 
 
-8) Start web server:
+7) Start web server:
 
 ```bash
 bun run server.ts
