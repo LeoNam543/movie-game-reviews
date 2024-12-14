@@ -6,7 +6,7 @@ The application server is responsible for processing API requests and serving fr
 ```bash
 git clone https://github.com/LeoNam543/movie-game-reviews.git
 ```
-2)Open project directory in terminal.
+2) Open project directory in terminal.
 ```bash
 cd path/to/project/movie-game-reviews 
 ```
