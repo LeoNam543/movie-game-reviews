@@ -3,6 +3,7 @@ import { signin } from './register';
 import { Database } from "bun:sqlite";
 import { v4 as uuidv4 } from 'uuid';
 import { md5 } from 'js-md5';
+import xss from 'xss';
 
 const ANON_PATH = '/anon'
 const SIGN_IN_PATH = '/signin'
@@ -19,8 +20,9 @@ const server = Bun.serve({
     async fetch(req) {
         const url = new URL(req.url);
         console.log(url.pathname)
+        url.pathname = xss(url.pathname)
         const db = new Database("movie-reviews.sqlite");
-
+        
         // Get asset files.
         if (req.url.includes('/web/')) {
 
@@ -68,9 +70,11 @@ const server = Bun.serve({
             if (!p.nickname || !p.email || !p.password) {
                 throw new Error("not all credentials entered")
             }
-
-            const md5password = md5(p.password)
-            return register(p.nickname, p.email, md5password)
+            let nickname = xss(p.nickname)
+            let email = xss(p.email)
+            let password = xss(p.password)
+            const md5password = md5(password)
+            return register(nickname, email, md5password)
         }
         if (url.pathname === '/api/signin') {
             console.log("in api signin")
@@ -78,8 +82,10 @@ const server = Bun.serve({
             if (!p.email || !p.password) {
                 throw new Error("not all credentials entered")
             }
-            const md5password = md5(p.password)
-            return signin(p.email, md5password)
+            let email = xss(p.email)
+            let password = xss(p.password)
+            const md5password = md5(password)
+            return signin(email, md5password)
         }
 
         // Check user logged in.
@@ -153,9 +159,9 @@ const server = Bun.serve({
                 query.run()
             }
 
-            const contentName = fields.contentName
-            const contentDesc = fields.contentDesc
-            const contentType = fields.contentType
+            const contentName = xss(fields.contentName)
+            const contentDesc = xss(fields.contentDesc)
+            const contentType = xss(fields.contentType)
             db.query(`
                 update content set content_name="${contentName}", content_description="${contentDesc}", content_type="${contentType}" where id="${contentId}"
                 `).run()
@@ -204,9 +210,9 @@ const server = Bun.serve({
             query.run()
 
             // Add film to DB.
-            const contentName = fields.contentName
-            const contentDesc = fields.contentDesc
-            const contentType = fields.contentType
+            const contentName = xss(fields.contentName)
+            const contentDesc = xss(fields.contentDesc)
+            const contentType = xss(fields.contentType)
             // const result = db.query(`
             //         select data from files where file_id="${fileId}"
             //         `).get() as { data: Uint8Array };
@@ -231,11 +237,11 @@ const server = Bun.serve({
             if (!p.contentId || !p.review || !p.rating) {
                 throw new Error("Not everything submited")
             }
-            const contId = p.contentId
-            const reviewText = p.review
-            const starRating = p.rating
-            const title = p.title
-            const time = p.timestamp
+            const contId = xss(p.contentId)
+            const reviewText = xss(p.review)
+            const starRating = xss(p.rating)
+            const title = xss(p.title)
+            const time = xss(p.timestamp)
             const userId = getUserIdFromCookie(req, db);
 
             const amountReviews = db.query(`
@@ -268,16 +274,17 @@ const server = Bun.serve({
         }
         if (url.pathname === "/api/edit_user_review") {
             const p = await req.json();
-            if (!p.contentId || !p.review || !p.editRating) {
+            if (!p.contentId || !p.review || !p.editRating || !p.title) {
                 throw new Error("Not everything submited")
             }
             const contId = p.contentId
-            const reviewText = p.review
-            const starRating = p.editRating
+            const reviewText = xss(p.review)
+            const starRating = xss(p.editRating)
             const userId = getUserIdFromCookie(req, db);
-
-            const query = db.prepare(`update reviews set (review, star_rating)=(?, ?) where (content_id="${contId}" and user_id="${userId}")`);
-            query.values(reviewText, starRating)
+            const title = xss(p.title)
+            const time = p.timestamp 
+            const query = db.prepare(`update reviews set (review, star_rating, title, time)=(?, ?, ?, ?) where (content_id="${contId}" and user_id="${userId}")`);
+            query.values(reviewText, starRating, title, time)
             query.run()
             updateContentRating(db, contId)
 

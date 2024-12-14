@@ -11,6 +11,7 @@ const showReviewForm = document.getElementById("show-user-review")
 const showReviewFormContainer = document.getElementById("show-user-review-container")
 const deleteUserReviewBtn = document.getElementById("delete-user-review-btn")
 const reviewTitle = document.getElementById("review-title")
+const editreviewTitle = document.getElementById("edit-review-title")
 
 const editUserReview = document.getElementById("submit-edit-review")
 
@@ -25,9 +26,11 @@ const editReviewTitleInput = document.getElementById("edit-review-title")
 editUserReview.addEventListener('click', async () => {
     const parts = window.location.pathname.split('/')
     const contentId = parts[parts.length - 1]
-
+    const timestamp = Date.now()
+    const title = editreviewTitle.value;
+    
     const review = userReviewValue.value;
-    if (!contentId || !review || !editRating) {
+    if (!contentId || !review || !editRating || !title ) {
         errorMessage.innerText = 'Not everything submited.'
         throw new Error('Not everything submited.')
     }
@@ -36,7 +39,7 @@ editUserReview.addEventListener('click', async () => {
             verbose: true,
             redirect: 'follow',
             method: "POST",
-            body: JSON.stringify({ contentId, review, editRating })
+            body: JSON.stringify({ contentId, review, editRating, title, timestamp })
         });
 
         if (!res.ok) {
@@ -441,7 +444,7 @@ function readFileDataAsBase64(e) {
 
 function getReviewHtml(title, star_rating, review, nickname, date){
     return (`
-        <div class='rows'>
+        <div class='w'>
         <div class="username-star-container">
             <div class='review-header'>
                 <h1 class="title">${title}</h1>
