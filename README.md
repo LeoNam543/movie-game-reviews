@@ -8,7 +8,7 @@ The application server is responsible for processing API requests and serving fr
 bun install
 ```
 2) Add admin credentials file:
-1) Create file in the project directory `movie-game-reviews\admin_credentials.ts` with following content
+  1) Create file in the project directory `movie-game-reviews\admin_credentials.ts` with following content
 ```bash
 export const adminName = "AdminUser"
 export const adminGmail = "admin@gmail.com"
