@@ -2,12 +2,12 @@
 This application is a website where user can register, create and manage reviews for movies/games.
 The application server is responsible for processing API requests and serving front-end static files.
 
-Install dependencies:
+1) Install dependencies:
 
 ```bash
 bun install
 ```
-Add admin credentials file:
+2) Add admin credentials file:
 1) Create file in the project directory `movie-game-reviews\admin_credentials.ts` with following content
 ```bash
 export const adminName = "AdminUser"
@@ -20,7 +20,7 @@ export const adminPassword = "admin123"
 Note: Admin credentials added this way to avoid exposing them on Github.
 
 
-To start web server:
+3) Start web server:
 
 ```bash
 bun run server.ts
