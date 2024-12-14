@@ -444,7 +444,7 @@ function readFileDataAsBase64(e) {
 
 function getReviewHtml(title, star_rating, review, nickname, date){
     return (`
-        <div class='w'>
+    <div class='rows'>
         <div class="username-star-container">
             <div class='review-header'>
                 <h1 class="title">${title}</h1>
