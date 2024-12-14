@@ -1,4 +1,4 @@
-# software-server
+# Movie/Game reviews
 This application is a website where user can register, create and manage reviews for movies/games.
 The application server is responsible for processing API requests and serving front-end static files.
 
