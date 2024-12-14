@@ -269,7 +269,6 @@ textarea {
 
 .content-page-wrapper {
     /* border: white solid 2px; */
-    height: 900px;
     display: flex;
     flex-direction: row;
     padding: 10px;
@@ -361,7 +360,7 @@ textarea {
 .card {
     border: 2px white solid;
     width: 250px;
-    /* height: 350px; */
+    min-height: 367px;
     display: flex;
     justify-content: center;
     flex-direction: column;
