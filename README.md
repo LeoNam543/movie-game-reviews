@@ -1,11 +1,22 @@
 # software-server
 This application is a website where user can register leave reviews for movies/games.
 
-To install dependencies:
+Install dependencies:
 
 ```bash
 bun install
 ```
+Add admin credentials file:
+Create file in the project directory `software-server\admin_credentials.ts` with following content
+```bash
+export const adminName = "AdminUser"
+export const adminGmail = "admin@gmail.com"
+export const adminPassword = "admin123"
+```
+Replace fields with your admin credentials.
+
+Note: Admin credentials added this way to avoid exposing them on Github.
+
 
 To start web server:
 
