@@ -23,6 +23,7 @@ export const adminGmail = "admin@gmail.com"
 export const adminPassword = "admin123"
 ```
 Replace fields values with your admin credentials.
+
 Note: Admin credentials added this way to avoid exposing them on Github.
 
 5) Initialise database
