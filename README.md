@@ -19,7 +19,7 @@ bun install
 
 Update fields values with <strong>your admin credentials</strong> in the script below.
 
-Copy the script in your CMD terminal and press Enter.
+Copy the script in your CMD(windows) terminal and press Enter.
    
 ```bash
 echo export const adminName = "AdminUser" > admin_credentials.ts;
