@@ -8,14 +8,14 @@ Install dependencies:
 bun install
 ```
 Add admin credentials file:
-Create file in the project directory `movie-game-reviews\admin_credentials.ts` with following content
+1) Create file in the project directory `movie-game-reviews\admin_credentials.ts` with following content
 ```bash
 export const adminName = "AdminUser"
 export const adminGmail = "admin@gmail.com"
 export const adminPassword = "admin123"
 ```
-Replace fields with your admin credentials.
-Open and run `movie-game-reviews\initialize.ts` file to initialise database
+2) Replace fields with your admin credentials.
+3) Open and run `movie-game-reviews\initialize.ts` file to initialise database
 
 Note: Admin credentials added this way to avoid exposing them on Github.
 
