@@ -1,5 +1,5 @@
 # software-server
-This application is a website 
+This application is a website where user can register leave reviews for movies/games.
 
 To install dependencies:
 
