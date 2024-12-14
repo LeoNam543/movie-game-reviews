@@ -7,7 +7,7 @@ Install dependencies:
 bun install
 ```
 Add admin credentials file:
-Create file in the project directory `software-server\admin_credentials.ts` with following content
+Create file in the project directory `movie-game-reviews/admin_credentials.ts` with following content
 ```bash
 export const adminName = "AdminUser"
 export const adminGmail = "admin@gmail.com"
