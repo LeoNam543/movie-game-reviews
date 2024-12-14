@@ -8,7 +8,7 @@ git clone https://github.com/LeoNam543/movie-game-reviews.git
 ```
 2) Open project directory in terminal.
 ```bash
-cd path/to/project/movie-game-reviews 
+cd your/path/to/project/movie-game-reviews 
 ```
 3) Install dependencies:
 
