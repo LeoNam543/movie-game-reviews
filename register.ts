@@ -2,6 +2,7 @@ import { Database } from "bun:sqlite";
 import { v4 as uuidv4 } from 'uuid';
 import { md5 } from 'js-md5';
 import { adminGmail, adminPassword } from './admin_credentials';
+const hashadmin = md5(adminPassword)
 
 export function register(nickname: string, email: string, password: string) {
     const db = new Database("movie-reviews.sqlite");
@@ -51,7 +52,7 @@ export function signin(email: string, password: string) {
     let redirectPath: string = '/home';
     let isAdmin: number = 0;
     // Check if admin
-    if (email === adminGmail && password === adminPassword) {
+    if (email === adminGmail && password === hashadmin) {
         redirectPath = '/adminpage';
         isAdmin = 1;
     }

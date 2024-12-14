@@ -382,8 +382,11 @@ function checkIsAdmin(req: Request) {
     const query = db.query(`
         select is_admin as isAdmin from session where session_id="${sessionId}"
         `)
+    
     const res = query.get() as { isAdmin: number }
-
+    const query1 = db.query(`
+        select * from session
+        `).all()
     if (res.isAdmin === 0) {
         return false
     }
