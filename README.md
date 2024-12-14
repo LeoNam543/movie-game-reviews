@@ -8,19 +8,19 @@ The application server is responsible for processing API requests and serving fr
 bun install
 ```
 2) Add admin credentials file:
-  1) Create file in the project directory `movie-game-reviews\admin_credentials.ts` with following content
+3) Create file in the project directory `movie-game-reviews\admin_credentials.ts` with following content
 ```bash
 export const adminName = "AdminUser"
 export const adminGmail = "admin@gmail.com"
 export const adminPassword = "admin123"
 ```
-2) Replace fields with your admin credentials.
-3) Open and run `movie-game-reviews\initialize.ts` file to initialise database
+4) Replace fields with your admin credentials.
+5) Open and run `movie-game-reviews\initialize.ts` file to initialise database
 
 Note: Admin credentials added this way to avoid exposing them on Github.
 
 
-3) Start web server:
+6) Start web server:
 
 ```bash
 bun run server.ts
