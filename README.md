@@ -16,7 +16,7 @@ cd your/path/to/project/movie-game-reviews
 bun install
 ```
 4) Add admin credentials file:
-Create file in the project directory `movie-game-reviews/admin_credentials.ts` with following content
+Create file `admin_credentials.ts` in the project directory with following content
 ```bash
 export const adminName = "AdminUser"
 export const adminGmail = "admin@gmail.com"
