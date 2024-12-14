@@ -44,6 +44,7 @@ bun run server.ts
 7) Open app in browser
 
 This app can be opened locally using link http://localhost:3000, or if deployed to e.g. `Azure/AWS` using vendor provided domain.
+
 To login as admin use the credetials you added on step 4)
 
 This project was created using `bun init` in bun v1.1.34. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
