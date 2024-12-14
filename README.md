@@ -22,19 +22,21 @@ export const adminName = "AdminUser"
 export const adminGmail = "admin@gmail.com"
 export const adminPassword = "admin123"
 ```
-5) Replace fields with your admin credentials.
-6) Open and run `movie-game-reviews/initialize.ts` file to initialise database
-
+Replace fields values with your admin credentials.
 Note: Admin credentials added this way to avoid exposing them on Github.
 
+5) Initialise database
+```bash
+bun .\initialize.ts
+```
 
-7) Start web server:
+6) Start web server:
 
 ```bash
 bun run server.ts
 ```
-
-This app can be opened locally using link http://localhost:3000, or if deployed using vendor provided domain.
-If you want to access admin functions (add, delete, edit content), enter admin credentials into sign-in page
+7) Open app in browser
+This app can be opened locally using link http://localhost:3000, or if deployed to e.g. `Azure/AWS` using vendor provided domain.
+To login as admin use the credetials you added on step 4)
 
 This project was created using `bun init` in bun v1.1.34. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
