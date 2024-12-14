@@ -1,5 +1,7 @@
 import { Database } from "bun:sqlite";
 import { v4 as uuidv4 } from 'uuid';
+import { md5 } from 'js-md5';
+import { adminGmail, adminPassword } from './admin_credentials';
 
 export function register(nickname: string, email: string, password: string) {
     const db = new Database("movie-reviews.sqlite");
@@ -34,9 +36,6 @@ export function register(nickname: string, email: string, password: string) {
 
     return response;
 }
-
-const adminGmail = "admin@gmail.com"
-const adminPassword = "admin123"
 
 export function signin(email: string, password: string) {
     const db = new Database("movie-reviews.sqlite");

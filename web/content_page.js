@@ -9,13 +9,16 @@ const reviewsContainer = document.getElementById("reviews-container")
 const addReviewForm = document.getElementById("add-user-review")
 const showReviewForm = document.getElementById("show-user-review")
 const showReviewFormContainer = document.getElementById("show-user-review-container")
-const deleteUserReviewBtn = document.getElementById("delete-user-review-btn") 
+const deleteUserReviewBtn = document.getElementById("delete-user-review-btn")
+const reviewTitle = document.getElementById("review-title")
 
-const editUserReview = document.getElementById("submit-edit-review") 
+const editUserReview = document.getElementById("submit-edit-review")
 
 const editUserReviewForm = document.getElementById("edit-user-review")
 const showEditUserReviewBtn = document.getElementById("edit-user-review-btn")
 const userReviewValue = document.getElementById("edit-review")
+const editReviewTitleInput = document.getElementById("edit-review-title")
+
 
 
 // EDIT REVIEW
@@ -65,6 +68,7 @@ showEditUserReviewBtn.addEventListener('click', async () => {
         console.log(resJson)
 
         userReviewValue.value = resJson.content.review
+        editReviewTitleInput.value = resJson.content.title;
         editupdateRating(resJson.content.star_rating)
 
     } catch (e) {
@@ -83,8 +87,8 @@ let output =
 let edoutput =
     document.getElementById("edit-rating-text");
 
-let rating = 0; 
-let editRating = 0; 
+let rating = 0;
+let editRating = 0;
 
 function editupdateRating(n) {
     // Max amount of stars.
@@ -111,7 +115,10 @@ reviewSubmit.addEventListener('click', async () => {
     const parts = window.location.pathname.split('/')
     const contentId = parts[parts.length - 1]
     const review = reviewInput.value;
-    if (!contentId || !review || !rating) {
+    const title = reviewTitle.value;
+    const timestamp = Date.now()
+
+    if (!contentId || !review || !rating || !title) {
         errorMessage.innerText = 'Not everything submited.'
         throw new Error('Not everything submited.')
     }
@@ -120,7 +127,7 @@ reviewSubmit.addEventListener('click', async () => {
             verbose: true,
             redirect: 'follow',
             method: "POST",
-            body: JSON.stringify({ contentId, review, rating })
+            body: JSON.stringify({ contentId, review, rating, title, timestamp })
         });
 
         if (!res.ok) {
@@ -137,7 +144,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         await showAllContentReviews()
         await showUserContentReview()
-        // wireUpDeleteUserReviewBtn()       
 
     } catch (e) {
         errorMessage.innerText = 'Something went wrong.'
@@ -146,25 +152,25 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
-    deleteUserReviewBtn.addEventListener('click', async () => {
-        const parts = window.location.pathname.split('/')
-        const contentId = parts[parts.length - 1]
-        if (!contentId) {
-            throw new Error()
-        }
+deleteUserReviewBtn.addEventListener('click', async () => {
+    const parts = window.location.pathname.split('/')
+    const contentId = parts[parts.length - 1]
+    if (!contentId) {
+        throw new Error()
+    }
 
-        const res = await fetch("/api/delete_user_review_for_content", {
-            verbose: true,
-            redirect: 'follow',
-            method: "POST",
-            body: JSON.stringify({ contentId })
-        });
+    const res = await fetch("/api/delete_user_review_for_content", {
+        verbose: true,
+        redirect: 'follow',
+        method: "POST",
+        body: JSON.stringify({ contentId })
+    });
 
-        if (!res.ok) {
-            throw new Error();
-        }
-        location.reload();
-    })
+    if (!res.ok) {
+        throw new Error();
+    }
+    location.reload();
+})
 
 
 
@@ -209,14 +215,9 @@ function renderUserReviewSection(r) {
     }
     addReviewForm.classList.add('hidden')
     showReviewFormContainer.classList.remove('hidden')
+    const date = new Date(r.time).toLocaleString()
 
-    showReviewForm.innerHTML = `
-      <div class="username-star-container">
-          <div class="username">${r.nickname}</div>
-          <div class="star_rating">${r.star_rating}/5</div>
-      </div>
-      <div class="review_text">${r.review}</div>
-  `
+    showReviewForm.innerHTML = getReviewHtml(r.title, r.star_rating, r.review, r.nickname, date)
 }
 
 async function showAllContentReviews() {
@@ -253,15 +254,8 @@ function renderReviews(reviews) {
 
     let reviewsHtml = '';
     for (const r of reviews) {
-        reviewsHtml += `
-          <div class="review">
-            <div>
-                <div class="username">${r.nickname}</div>
-                <div class="star_rating">${r.star_rating}</div>
-            </div>
-            <div class="review_text">${r.review}</div>
-        </div>
-        `
+        const date = new Date(r.time).toLocaleString()
+        reviewsHtml += getReviewHtml(r.title, r.star_rating, r.review, r.nickname, date)
     }
     reviewsContainer.innerHTML = reviewsHtml;
 }
@@ -323,47 +317,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             method: "GET",
         });
 
+        if (!res.ok) {
+            throw new Error();
+        }
+
         const { isAdmin } = await res.json()
 
         if (isAdmin) {
             editContentBTN.style.display = "block"
-        }
-
-
-        if (!res.ok) {
-            throw new Error();
-        }
-
-        if (res.redirected) {
-            window.location.href = res.url;
-        }
-    } catch (e) {
-        errorMessage.innerText = 'Something went wrong.'
-    }
-})
-
-
-document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        const res = await fetch("/api/is_admin", {
-            verbose: true,
-            redirect: 'follow',
-            method: "GET",
-        });
-
-        const { isAdmin } = await res.json()
-
-        if (isAdmin) {
             deleteContent.style.display = "block"
-        }
-
-
-        if (!res.ok) {
-            throw new Error();
-        }
-
-        if (res.redirected) {
-            window.location.href = res.url;
         }
     } catch (e) {
         errorMessage.innerText = 'Something went wrong.'
@@ -427,7 +389,7 @@ editContentBTN.addEventListener('click', async () => {
 
 function renderContent(media) {
     const { content_name, content_description, content_type, img_id, average_rating } = media;
-    if (!img_id || !content_name || !content_type || !content_description || average_rating==null) {
+    if (!img_id || !content_name || !content_type || !content_description || average_rating == null) {
         throw new Error("Not all content info received")
     }
     if (!mainContent) {
@@ -475,4 +437,22 @@ function readFileDataAsBase64(e) {
 
         reader.readAsArrayBuffer(file);
     });
+}
+
+function getReviewHtml(title, star_rating, review, nickname, date){
+    return (`
+        <div class='rows'>
+        <div class="username-star-container">
+            <div class='review-header'>
+                <h1 class="title">${title}</h1>
+                <h2 class="star_rating">${star_rating}/5</h2>
+            </div>
+        </div>
+        <div class="review_text">${review}</div>
+        <div class="review-footer">
+            <div class="username">Author: ${nickname}</div>
+            <div class="time">Date: ${date}</div>
+        </div>
+    </div>
+    `)
 }

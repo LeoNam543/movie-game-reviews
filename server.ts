@@ -2,6 +2,8 @@ import { register } from './register';
 import { signin } from './register';
 import { Database } from "bun:sqlite";
 import { v4 as uuidv4 } from 'uuid';
+import { md5 } from 'js-md5';
+
 const ANON_PATH = '/anon'
 const SIGN_IN_PATH = '/signin'
 const REGISTER_PATH = '/register'
@@ -18,7 +20,6 @@ const server = Bun.serve({
         const url = new URL(req.url);
         console.log(url.pathname)
         const db = new Database("movie-reviews.sqlite");
-
 
         // Get asset files.
         if (req.url.includes('/web/')) {
@@ -68,7 +69,8 @@ const server = Bun.serve({
                 throw new Error("not all credentials entered")
             }
 
-            return register(p.nickname, p.email, p.password)
+            const md5password = md5(p.password)
+            return register(p.nickname, p.email, md5password)
         }
         if (url.pathname === '/api/signin') {
             console.log("in api signin")
@@ -76,7 +78,8 @@ const server = Bun.serve({
             if (!p.email || !p.password) {
                 throw new Error("not all credentials entered")
             }
-            return signin(p.email, p.password)
+            const md5password = md5(p.password)
+            return signin(p.email, md5password)
         }
 
         // Check user logged in.
@@ -103,16 +106,14 @@ const server = Bun.serve({
                 `).get() as { content_name: string, content_description: string, content_type: number, img_id: string, average_rating: number }[]
             return Response.json({ content: res })
         }
-
         if (url.pathname === '/api/get_specific_review') {
             const userId = getUserIdFromCookie(req, db);
             const contentId = await req.text()
             const res = db.query(`
-                select review, star_rating from reviews where (content_id="${contentId}" and user_id="${userId}")
-                `).get() as { review: string, star_rating: number}[]
+                select review, star_rating, title from reviews where (content_id="${contentId}" and user_id="${userId}")
+                `).get() as { review: string, star_rating: number, title: string}[]
             return Response.json({ content: res })
         }
-
         if (url.pathname === '/api/delete-content') {
             const contentId = await req.text()
             const res = db.query(`
@@ -159,9 +160,6 @@ const server = Bun.serve({
                 update content set content_name="${contentName}", content_description="${contentDesc}", content_type="${contentType}" where id="${contentId}"
                 `).run()
 
-
-
-
             // db.query(`
             //     update files set data=${file} where file_id="${res.img_id}"
             //     `).run()
@@ -173,9 +171,6 @@ const server = Bun.serve({
                 select * from files`
             ).all()
             console.log(cuh1)
-
-            // console.log(cuh)
-            // debugger
         }
         if (url.pathname === '/api/get_content') {
             console.log("get content")
@@ -230,14 +225,6 @@ const server = Bun.serve({
             `).all();
             console.log(contentTable)
             return Response.redirect(HOME_PATH);
-
-
-
-            // debugger;
-            // if (!formData.contentName || !formData.contentDesc || formData.contentType || formData.poster) {
-            //     throw new Error("Fill out the form fully")
-            // }
-            // console.log(formData.contentDesc)
         }
         if (url.pathname === "/api/add_review") {
             const p = await req.json();
@@ -247,6 +234,8 @@ const server = Bun.serve({
             const contId = p.contentId
             const reviewText = p.review
             const starRating = p.rating
+            const title = p.title
+            const time = p.timestamp
             const userId = getUserIdFromCookie(req, db);
 
             const amountReviews = db.query(`
@@ -256,7 +245,8 @@ const server = Bun.serve({
                 throw new Error("review already exists")
             }
             db.query(`
-                insert into reviews (review, star_rating, user_id, content_id) values ("${reviewText}", ${starRating}, "${userId}", "${contId}")
+                insert into reviews (review, star_rating, user_id, content_id, title, time) 
+                values ("${reviewText}", ${starRating}, "${userId}", "${contId}", "${title}", ${time} )
                 `).run()
             let asd = db.query(`
                 select * from reviews
@@ -267,7 +257,15 @@ const server = Bun.serve({
 
             return new Response()
         }
+        if (url.pathname === "/api/get_user_nickname") {
+            const userId = getUserIdFromCookie(req, db);
+        
+            const userNickname = db.query(`
+                select nickname from user where id="${userId}"
+                `).get()
+            return new Response(JSON.stringify(userNickname));
 
+        }
         if (url.pathname === "/api/edit_user_review") {
             const p = await req.json();
             if (!p.contentId || !p.review || !p.editRating) {
@@ -293,11 +291,11 @@ const server = Bun.serve({
             // Get all reviews for the current content id excluding current user review
             // as we are going to show it separately.
             const reviews = db.query(`
-                select r.review, r.star_rating, u.nickname
+                select r.review, r.star_rating, u.nickname, r.time, r.title
                 from reviews r join user u on r.user_id = u.id
                 where r.content_id = ${contentId} and r.user_id != ${userId}
                 order by r.id desc
-                `).all() as { review: string, star_rating: number, user_id: number, content_id: number }[]
+                `).all() as { review: string, star_rating: number, user_id: number, content_id: number, time: number, title: string }[]
 
             return new Response(JSON.stringify(reviews));
         }
@@ -305,7 +303,7 @@ const server = Bun.serve({
             const { contentId } = await req.json();
             const userId = getUserIdFromCookie(req, db)
             const review = db.query(`
-                select r.review, r.star_rating, u.nickname
+                select r.review, r.star_rating, r.title, r.time, u.nickname
                 from reviews r join user u on r.user_id = u.id
                 where r.content_id = ${contentId} and r.user_id = ${userId}
                 `).get() as { review: string, star_rating: number, nickname: string } | undefined
@@ -434,7 +432,7 @@ function updateContentRating(db: Database, contentId: number) {
         select coalesce(avg(star_rating), ${0}) as average from reviews where content_id="${contentId}"
         `).get() as { average : number }
     db.query(`
-        update content set average_rating=${avgRating.average} where id="${contentId}"
+        update content set average_rating=${Math.round(avgRating.average * 100) / 100} where id="${contentId}"
         `).run()
     const avgshow = db.query(`
         select * from content

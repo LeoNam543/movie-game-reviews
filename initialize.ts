@@ -1,5 +1,8 @@
 import { Database } from "bun:sqlite";
+import { md5 } from 'js-md5';
 import { adminGmail, adminName, adminPassword } from './admin_credentials';
+
+const adminHashPassword = md5(adminPassword)
 
 // Create db if it does not exist.
 const db = new Database("movie-reviews.sqlite");
@@ -82,12 +85,14 @@ db.query(`
     review STRING NOT NULL,
     star_rating INTEGER NOT NULL,
     user_id INTEGER NOT NULL,
-    content_id INTEGER NOT NULL)
+    content_id INTEGER NOT NULL,
+    title STRING NOT NULL,
+    time INTEGER NOT NULL)
     `).run()
 
 // Add admin user.
 db.query(`
-    insert into user (nickname, email, password) values ("${adminName}", "${adminGmail}", "${adminPassword}")
+    insert into user (nickname, email, password) values ("${adminName}", "${adminGmail}", "${adminHashPassword}")
     `).run()
 
 

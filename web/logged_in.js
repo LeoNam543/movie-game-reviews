@@ -2,6 +2,8 @@ const signOutlogoButton = document.getElementById("signOutlogoButton");
 const addContentButton = document.getElementById("addcontentbtn")
 const contentContainer = document.getElementById("content_container")
 const errorMessage = document.getElementById("errorMessage")
+const userName = document.getElementById("user-name")
+
 
 addContentButton.addEventListener('click', (e) => {
     window.location.href = "/addcontent"
@@ -119,3 +121,26 @@ function renderContent(content) {
 
     } 
 }
+
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const res = await fetch("/api/get_user_nickname", {
+            verbose: true,
+            redirect: 'follow',
+            method: "GET",
+        });
+
+        if (!res.ok) {
+            throw new Error();
+        }
+        const resJson = await res.json()
+        const userNickname = resJson.nickname
+
+        userName.innerText = userNickname
+        if (res.redirected) {
+            window.location.href = res.url;
+        }
+    } catch (e) {
+        errorMessage.innerText = 'Something went wrong.'
+    }
+})

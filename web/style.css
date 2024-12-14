@@ -5,39 +5,56 @@
     font-weight: bold;
 }
 
+body {
+    color: white;
+}
+
+.rows > div {
+    margin-bottom: 8px;
+}
+
+input,
+textarea {
+    color: black;
+}
+
 .hidden {
     display: none !important;
 }
 
-.username{
-    color: white;
-    font-size: 30px;
+.review-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
-.star_rating{
-    font-size: 30px;
-    color: white;
+.review-footer {
+    color: gray;
+    font-size: small;
 }
-.review_text{
-    color: white;
+
+.title {
+    margin-right: 8px;
 }
-.username-star-container{
+
+.username-star-container {
     display: flex;
     gap: 30px;
 }
 
-.edit-review-buttons{
+.edit-review-buttons {
     display: flex;
     gap: 20px;
 }
 
-.show-user-review{
+.show-user-review {
     background-color: rgb(39, 39, 39);
     border: rgb(112, 112, 112) solid 2px;
     width: 100vh;
     justify-self: center;
     padding: 10px;
 }
-.delete-user-review-btn{
+
+.delete-user-review-btn {
     margin-top: 10px;
     margin-bottom: 10px;
     color: rgb(255, 240, 240);
@@ -51,12 +68,13 @@
     width: 230px;
 }
 
-.delete-user-review-btn:hover{
+.delete-user-review-btn:hover {
     cursor: pointer;
     transform: scale(1.03);
     transition: transform 0.2s;
 }
-.edit-user-review-btn{
+
+.edit-user-review-btn {
     margin-top: 10px;
     margin-bottom: 10px;
     color: rgb(255, 240, 240);
@@ -69,7 +87,8 @@
     font-size: 20px;
     width: 230px;
 }
-.edit-user-review-btn:hover{
+
+.edit-user-review-btn:hover {
     cursor: pointer;
     transform: scale(1.03);
     transition: transform 0.2s;
@@ -81,7 +100,48 @@ header {
     display: flex;
     align-items: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    justify-content: space-between;
+}
+
+.header1 {
+    height: 100px;
+    background-color: rgb(37, 37, 37);
+    display: flex;
+    align-items: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     justify-content: flex-end;
+}
+
+.thereview {
+    background-color: rgb(77, 77, 77);
+    padding: 5px;
+    border: 2px solid rgb(133, 133, 133);
+}
+
+.reviewheaders {
+    display: flex;
+    gap: 20px;
+}
+
+.reviews-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reviews-container {
+    color: white;
+}
+
+.error_message {
+    color: white;
+    margin-bottom: 10px;
+}
+
+.user-name {
+    color: aliceblue;
+    width: 20px;
+    margin-left: 30px;
 }
 
 .headercontent {
@@ -145,6 +205,7 @@ textarea {
     justify-content: center;
     gap: 10px;
 }
+
 .edit-review-form p {
     font-size: 30px;
     color: white;
@@ -156,7 +217,8 @@ textarea {
     color: white;
     text-align: center;
 }
-.edit-review-form .edit-review{
+
+.edit-review-form .edit-review {
     height: 200px;
     width: 50%;
     align-self: center;
@@ -173,6 +235,7 @@ textarea {
     cursor: pointer;
     font-size: 5vh;
 }
+
 .edstar {
     color: rgb(255, 255, 255);
     cursor: pointer;
@@ -277,7 +340,7 @@ textarea {
     font-size: 25px;
     width: 90%;
     text-wrap: wrap;
-    word-break: break-all;
+    /* word-break: break-all; */
     height: 100px;
     /* border: white solid 2px; */
 }
@@ -299,6 +362,12 @@ textarea {
     justify-content: center;
     flex-direction: column;
     align-items: center;
+}
+
+.card:hover {
+    transform: scale(1.03);
+    transition: transform 0.2s;
+    cursor: pointer;
 }
 
 .movie-card-text {
@@ -632,6 +701,7 @@ body {
     transition: transform 0.2s;
     cursor: pointer;
 }
+
 .submit-edit-review {
     color: rgb(255, 240, 240);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -643,6 +713,21 @@ body {
     font-size: 20px;
     width: 300px;
     margin-bottom: 10px;
+}
+
+.submit-edit-review:hover {
+    transform: scale(1.03);
+    transition: transform 0.2s;
+    cursor: pointer;
+    background-color: rgb(139, 0, 0);
+}
+
+.edit-review-title {
+    height: 30px;
+}
+
+.review-title {
+    height: 30px;
 }
 
 .submit-review {
