@@ -1,5 +1,6 @@
 # software-server
-This application is a website where user can register leave reviews for movies/games.
+This application is a website where user can register, create and manage reviews for movies/games.
+The application server is responsible for processing API requests and serving front-end static files.
 
 Install dependencies:
 
