@@ -48,7 +48,7 @@ editUserReview.addEventListener('click', async () => {
         location.reload();
 
     } catch (e) {
-        errorMessage.innerText = 'Something went wrong.'
+        errorMessage.innerText = 'Something went wrong here.'
     }
 })
 
