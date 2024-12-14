@@ -37,6 +37,7 @@ bun .\initialize.ts
 bun run server.ts
 ```
 7) Open app in browser
+
 This app can be opened locally using link http://localhost:3000, or if deployed to e.g. `Azure/AWS` using vendor provided domain.
 To login as admin use the credetials you added on step 4)
 
