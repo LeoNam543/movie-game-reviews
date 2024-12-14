@@ -16,13 +16,17 @@ cd your/path/to/project/movie-game-reviews
 bun install
 ```
 4) Add admin credentials file:
-Create file `admin_credentials.ts` in the project directory with following content
+
+Replace fields values with your admin credentials in the script below.
+Copy the script in your CMD terminal and press Enter.
+   
 ```bash
-export const adminName = "AdminUser"
-export const adminGmail = "admin@gmail.com"
-export const adminPassword = "admin123"
+echo export const adminName = "AdminUser" > admin_credentials.ts;
+echo export const adminGmail = "admin@gmail.com" >> admin_credentials.ts;
+echo export const adminPassword = "admin123" >> admin_credentials.ts;
 ```
-Replace fields values with your admin credentials.
+
+Note: Please ignore multiple line warning and click `Paste anyway` and press `Enter`.
 
 Note: Admin credentials added this way to avoid exposing them on Github.
 
