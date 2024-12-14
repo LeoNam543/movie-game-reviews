@@ -17,7 +17,7 @@ bun install
 ```
 4) Add admin credentials file:
 
-Replace fields values with your admin credentials in the script below.
+Update fields values with <strong>your admin credentials</strong> in the script below.
 
 Copy the script in your CMD terminal and press Enter.
    
