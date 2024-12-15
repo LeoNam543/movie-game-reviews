@@ -12,6 +12,7 @@ const ADD_CONTENT_PATH = '/addcontent'
 const EDIT_CONTENT_PATH = '/editcontent/'
 const HOME_PATH = '/home'
 const CONTENT_PATH = '/media/'
+const SW_PATH = '/sw.js'
 
 const BASE_PATH = '.';
 const server = Bun.serve({
@@ -22,7 +23,7 @@ const server = Bun.serve({
         console.log(url.pathname)
         url.pathname = xss(url.pathname)
         const db = new Database("movie-reviews.sqlite");
-        
+
         // Get asset files.
         if (req.url.includes('/web/')) {
 
@@ -36,6 +37,12 @@ const server = Bun.serve({
             }
 
             const filePath = BASE_PATH + new URL(req.url).pathname;
+            const file = Bun.file(filePath);
+            return new Response(file);
+        }
+
+        if (url.pathname === SW_PATH) {
+            const filePath = BASE_PATH + '/web' + new URL(req.url).pathname;
             const file = Bun.file(filePath);
             return new Response(file);
         }
@@ -117,7 +124,7 @@ const server = Bun.serve({
             const contentId = await req.text()
             const res = db.query(`
                 select review, star_rating, title from reviews where (content_id="${contentId}" and user_id="${userId}")
-                `).get() as { review: string, star_rating: number, title: string}[]
+                `).get() as { review: string, star_rating: number, title: string }[]
             return Response.json({ content: res })
         }
         if (url.pathname === '/api/delete-content') {
@@ -182,7 +189,7 @@ const server = Bun.serve({
             console.log("get content")
             const res = db.query(`
                 select id, content_name, img_id, content_type, average_rating from content
-                `).all() as { id: string, content_name: string, img_id: string, content_type: number, average_rating: number}[]
+                `).all() as { id: string, content_name: string, img_id: string, content_type: number, average_rating: number }[]
             return Response.json({ content: res })
         }
         if (url.pathname === '/api/addcontent') {
@@ -246,7 +253,7 @@ const server = Bun.serve({
 
             const amountReviews = db.query(`
                 select count(*) as count from reviews where user_id="${userId}" and content_id="${contId}"
-                `).get() as { count : number }
+                `).get() as { count: number }
             if (amountReviews.count > 0) {
                 throw new Error("review already exists")
             }
@@ -265,7 +272,7 @@ const server = Bun.serve({
         }
         if (url.pathname === "/api/get_user_nickname") {
             const userId = getUserIdFromCookie(req, db);
-        
+
             const userNickname = db.query(`
                 select nickname from user where id="${userId}"
                 `).get()
@@ -282,14 +289,14 @@ const server = Bun.serve({
             const starRating = xss(p.editRating)
             const userId = getUserIdFromCookie(req, db);
             const title = xss(p.title)
-            const time = p.timestamp 
+            const time = p.timestamp
             const query = db.prepare(`update reviews set (review, star_rating, title, time)=(?, ?, ?, ?) where (content_id="${contId}" and user_id="${userId}")`);
             query.values(reviewText, starRating, title, time)
             query.run()
             updateContentRating(db, contId)
 
             return new Response()
-            
+
         }
         if (url.pathname === "/api/reviews_get") {
             const { contentId } = await req.json();
@@ -324,8 +331,8 @@ const server = Bun.serve({
                 delete from reviews
                 where content_id = ${contentId} and user_id = ${userId}
                 `).run()
-            
-                updateContentRating(db, contentId)
+
+            updateContentRating(db, contentId)
 
             return new Response();
         }
@@ -389,7 +396,7 @@ function checkIsAdmin(req: Request) {
     const query = db.query(`
         select is_admin as isAdmin from session where session_id="${sessionId}"
         `)
-    
+
     const res = query.get() as { isAdmin: number }
     const query1 = db.query(`
         select * from session
@@ -440,7 +447,7 @@ function getUserIdFromCookie(req: Request, db: Database) {
 function updateContentRating(db: Database, contentId: number) {
     const avgRating = db.query(`
         select coalesce(avg(star_rating), ${0}) as average from reviews where content_id="${contentId}"
-        `).get() as { average : number }
+        `).get() as { average: number }
     db.query(`
         update content set average_rating=${Math.round(avgRating.average * 100) / 100} where id="${contentId}"
         `).run()
