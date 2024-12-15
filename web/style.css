@@ -413,7 +413,7 @@ textarea {
 }
 
 .edit-content {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     color: black;
     justify-content: center;
     align-items: center;
