@@ -25,7 +25,7 @@ Copy the script in your CMD(windows) terminal and press Enter.
 echo export const adminName = "AdminUser" > admin_credentials.ts;
 echo export const adminGmail = "admin@gmail.com" >> admin_credentials.ts;
 echo export const adminPassword = "admin123" >> admin_credentials.ts;
-echo "" >> admin_credentials.ts;
+echo >> admin_credentials.ts;
 ```
 
 Note: Please ignore multiple line warning and click `Paste anyway` and press `Enter`.
