@@ -1,19 +1,28 @@
+:root {
+    --content-width: 800px;
+    --form-width: 320px;
+}
+
 * {
-    margin: 0;
-    border: 0;
+    /* margin: 0;
+    border: 0; */
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bold;
+    box-sizing: border-box;
 }
 
+html,
 body {
     color: white;
+    margin: 0;
+    padding: 0;
 }
 
-.rows > div {
+.rows>div {
     margin-bottom: 8px;
 }
 
-.rows1{
+.rows1 {
     background-color: rgb(71, 71, 71);
 }
 
@@ -31,6 +40,7 @@ textarea {
     align-items: center;
     justify-content: space-between;
 }
+
 .review-footer {
     color: gray;
     font-size: small;
@@ -47,13 +57,14 @@ textarea {
 
 .edit-review-buttons {
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
 }
 
 .show-user-review {
     background-color: rgb(39, 39, 39);
     border: rgb(112, 112, 112) solid 2px;
-    width: 100vh;
+    width: 100%;
     justify-self: center;
     padding: 10px;
 }
@@ -98,22 +109,28 @@ textarea {
     transition: transform 0.2s;
 }
 
+
 header {
-    height: 100px;
+
+    margin-bottom: 24px;
+    padding: 10px 30px;
+    background-color: rgb(37, 37, 37);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    justify-content: space-between;
+
+}
+
+.header1 {
+    margin-bottom: 24px;
     background-color: rgb(37, 37, 37);
     display: flex;
     align-items: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     justify-content: space-between;
-}
-
-.header1 {
-    height: 100px;
-    background-color: rgb(37, 37, 37);
-    display: flex;
-    align-items: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    justify-content: flex-end;
+    width: 100%;
 }
 
 .thereview {
@@ -131,10 +148,8 @@ header {
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-
-.reviews-container {
     color: white;
+
 }
 
 .error_message {
@@ -144,16 +159,6 @@ header {
 
 .user-name {
     color: aliceblue;
-    width: 20px;
-    margin-left: 30px;
-}
-
-.headercontent {
-    width: 54.5%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
 }
 
 a {
@@ -170,13 +175,12 @@ a:hover {
 
 .content_container {
     border: white solid 2px;
-    width: 80%;
-    /* height: 400px; */
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     align-items: center;
     padding: 10px;
+    justify-content: center;
 }
 
 textarea {
@@ -184,30 +188,37 @@ textarea {
     outline: none;
 }
 
+.add-review-container {
+    width: 100%;
+    max-width: var(--content-width);
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .review-form {
-    border: rgb(112, 112, 112) solid 5px;
-    padding-top: 30px;
+    border: rgb(112, 112, 112) solid 2px;
     background-color: rgb(43, 43, 43);
+    width: 100%;
+}
+
+.review-form-content {
     justify-self: center;
-    width: 102vh;
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
     gap: 10px;
+    width: 100%;
+    max-width: var(--form-width);
+    margin-left: auto;
+    margin-right: auto;
 }
 
+
 .edit-review-form {
-    border: rgb(112, 112, 112) solid 5px;
-    padding-top: 30px;
+    border: rgb(112, 112, 112) solid 2px;
     background-color: rgb(43, 43, 43);
-    justify-self: center;
-    width: 102vh;
-    display: none;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    gap: 10px;
+    width: 100%;
 }
 
 .edit-review-form p {
@@ -224,14 +235,13 @@ textarea {
 
 .edit-review-form .edit-review {
     height: 200px;
-    width: 50%;
+    width: 100%;
     align-self: center;
 }
 
 .review-form .review {
     height: 200px;
-    width: 50%;
-    align-self: center;
+    width: 100%;
 }
 
 .star {
@@ -258,7 +268,8 @@ textarea {
 
 .reviews-container {
     border: rgb(112, 112, 112) solid 2px;
-    width: 100vh;
+    width: 100%;
+    max-width: var(--content-width);
     padding: 10px;
     justify-self: center;
 }
@@ -267,21 +278,33 @@ textarea {
     color: white;
 }
 
+.content-container {
+    width: 100%;
+}
+
 .content-page-wrapper {
+    background-color: rgb(43, 43, 43);
+
     /* border: white solid 2px; */
     display: flex;
-    flex-direction: row;
-    padding: 10px;
-    background-color: rgb(43, 43, 43);
+    margin-left: auto;
+    margin-right: auto;
     border: rgb(112, 112, 112) solid 2px;
-    padding-left: 30px;
-    padding-right: 30px;
+    width: 100%;
+    max-width: var(--content-width);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.img-container {
+    width: 50%;
+    min-width: 320px;
 }
 
 .content-page-poster {
     /* border: white solid 2px; */
-    height: 65vh;
-    width: 45vh;
+    height: auto;
+    width: 100%;
     overflow: hidden;
 }
 
@@ -312,7 +335,6 @@ textarea {
 }
 
 .RHS-edit {
-    /* border: rgb(255, 0, 0) solid 2px; */
     display: flex;
     flex-direction: column;
     height: 65vh;
@@ -323,13 +345,11 @@ textarea {
 
 
 .RHS {
-    /* border: rgb(255, 0, 0) solid 2px; */
     display: flex;
     flex-direction: column;
-    height: 65vh;
-    width: 50vh;
-    margin-left: 10px;
-
+    width: 50%;
+    min-width: 320px;
+    padding: 10px;
 }
 
 .signin_btn {
@@ -354,7 +374,6 @@ textarea {
     justify-content: center;
     align-items: center;
     font-size: 40px;
-    width: 100px;
 }
 
 .card {
@@ -386,35 +405,37 @@ textarea {
     overflow: hidden;
 }
 
-.edit-content .content_name {
-    width: 350px;
-}
-
 .edit-content .content-select {
-    width: 370px;
+    width: 100%;
     color: black;
     text-align: center;
     height: 30px;
 }
 
 .edit-content {
+    border: 1px solid red;
     color: black;
     justify-content: center;
     align-items: center;
-    width: 80%;
-    height: 600px;
+    width: 100%;
+    max-width: var(--form-width);
     display: flex;
     flex-direction: column;
     gap: 20px;
+    padding: 24px 0;
 }
+
+.edit-content > div {
+    width: 100%;
+}
+
 
 .addcontent {
     color: black;
     justify-content: center;
     align-items: center;
-    /* border: white solid 2px; */
-    width: 80%;
-    height: 600px;
+    width: 100%;
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -423,7 +444,7 @@ textarea {
 .addcontent select {
     color: black;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    width: 350px;
+    width: 100%;
     height: 30px;
     text-align: center;
     outline: none;
@@ -432,7 +453,6 @@ textarea {
 .addcontent p {
     color: aliceblue;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    width: 270px;
     text-align: center;
     margin-bottom: 5px;
     font-weight: bold;
@@ -441,11 +461,15 @@ textarea {
 .selectfile {
     color: aliceblue;
     height: 25px;
+    padding: 0;
+}
+
+.add_content_name_container {
+    width: 100%;
 }
 
 .addcontent input {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    width: 350px;
+    width: 100%;
 }
 
 .posterwrapperedit {
@@ -458,7 +482,7 @@ textarea {
 
 .posterwrapper {
     display: flex;
-    width: 350px;
+    width: 100%;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -492,12 +516,17 @@ textarea {
 .content_description {
     font-weight: bold;
     color: black;
-    width: 350px;
     height: 200px;
     font-size: large;
     padding-left: 20px;
     outline: none;
+    width: 100%;
 }
+
+.content_description_container {
+    width: 100%;
+}
+
 
 .content_name {
     color: black;
@@ -514,7 +543,6 @@ textarea {
 
 .maincontent {
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -523,7 +551,6 @@ textarea {
 
 .text_content {
     width: 100%;
-    height: 100px;
     justify-content: center;
     display: flex;
     flex-direction: column;
@@ -575,13 +602,16 @@ body {
 }
 
 .FormSection {
-    height: 600px;
     display: flex;
     width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
     gap: 30px;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding: 0 30px;
 }
 
 .FormSection h1 {
@@ -616,7 +646,6 @@ body {
 }
 
 .edit-page-sign {
-    margin-top: 10px;
     font-size: 30px;
 }
 
@@ -627,11 +656,13 @@ body {
 
 .contentPageAdminBtns {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     flex-direction: row;
     gap: 10px;
     background-color: rgb(43, 43, 43);
-    width: 102vh;
+    width: 100%;
+    max-width: var(--content-width);
 }
 
 .editContent:hover {
@@ -664,9 +695,8 @@ body {
 }
 
 .addreview_profile {
-    margin-right: 10px;
+    right: 0;
     display: flex;
-    width: 180px;
     gap: 5px;
     justify-self: flex-end;
     justify-content: flex-end;
@@ -693,7 +723,7 @@ body {
 }
 
 .signOutlogoButton {
-    width: 30px;
+    height: 40px;
     border: 2px white solid;
     padding: 5px;
     border-radius: 10px;
@@ -762,7 +792,7 @@ body {
     padding-top: 10px;
     padding-bottom: 10px;
     font-size: 20px;
-    width: 300px;
+    width: 100%;
 }
 
 .createpostbutton:hover {
@@ -798,7 +828,6 @@ body {
 
 .addcontentbtn {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    width: 115px;
     height: 40px;
     border-radius: 6px;
     color: rgb(255, 255, 255);
@@ -815,12 +844,12 @@ body {
 }
 
 .SignIn {
+    width: 100%;
     height: 100px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     justify-content: center;
-    box-sizing: border-box;
 }
 
 .errorMessage {
@@ -836,10 +865,11 @@ body {
     justify-content: center;
     box-sizing: border-box;
     align-items: center;
+    width: 100%;
 }
 
 input {
-    width: 400px;
+    width: 100%;
     height: 300px;
     font-size: large;
     padding-left: 20px;
@@ -881,7 +911,7 @@ input {
     padding-top: 10px;
     padding-bottom: 10px;
     font-size: 20px;
-    width: 300px;
+    width: 100%;
 }
 
 .signin_btn:hover {
@@ -899,7 +929,7 @@ input {
     padding-top: 10px;
     padding-bottom: 10px;
     font-size: 20px;
-    width: 300px;
+    width: 100%;
 }
 
 .RegisterAccountButton:hover {

@@ -117,7 +117,7 @@ function renderContent(content) {
         </div>
         `
         contentContainer.appendChild(element)
-
+        element.style.boxSizing="content-box"
 
     } 
 }

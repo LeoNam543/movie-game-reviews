@@ -14,6 +14,7 @@ const reviewTitle = document.getElementById("review-title")
 const editreviewTitle = document.getElementById("edit-review-title")
 
 const editUserReview = document.getElementById("submit-edit-review")
+const cancelEditUserReview = document.getElementById("cancel-edit-review")
 
 const editUserReviewForm = document.getElementById("edit-user-review")
 const showEditUserReviewBtn = document.getElementById("edit-user-review-btn")
@@ -52,8 +53,17 @@ editUserReview.addEventListener('click', async () => {
     }
 })
 
+cancelEditUserReview.addEventListener('click', ()=>{
+    editUserReviewForm.classList.add('hidden')
+    addReviewForm.classList.add('hidden')
+    showReviewFormContainer.classList.remove('hidden')
+})
+
 showEditUserReviewBtn.addEventListener('click', async () => {
-    editUserReviewForm.style.display = "flex"
+    editUserReviewForm.classList.remove('hidden')
+    addReviewForm.classList.add('hidden')
+    showReviewFormContainer.classList.add('hidden')
+
     const parts = window.location.pathname.split('/')
     const contentId = parts[parts.length - 1]
     try {
@@ -214,10 +224,12 @@ function renderUserReviewSection(r) {
     if (!r) {
         addReviewForm.classList.remove('hidden')
         showReviewFormContainer.classList.add('hidden')
+        editUserReviewForm.classList.add('hidden')
         return;
     }
     addReviewForm.classList.add('hidden')
     showReviewFormContainer.classList.remove('hidden')
+    editUserReviewForm.classList.add('hidden')
     const date = new Date(r.time).toLocaleString()
 
     showReviewForm.innerHTML = getReviewHtml(r.title, r.star_rating, r.review, r.nickname, date)
@@ -405,9 +417,12 @@ function renderContent(media) {
     }
 
     const element = document.createElement('div');
+    element.classList.add('content-container')
     element.innerHTML = `
         <div class="content-page-wrapper" id="content-page-wrapper">
-            <img class="content-page-poster" src="/web/content_img/${img_id}"></img>
+            <div class='img-container'>
+                <img class="content-page-poster" src="/web/content_img/${img_id}"></img>
+            </div>
             <div class="RHS">
                 <div class="content-page-title">
                     <div class="content-page-name">${content_name} ${contentType}</div>

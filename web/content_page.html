@@ -11,15 +11,13 @@
 <body>
     <header class="header1">
         <!-- <div>YOU ARE LOGGED IN</div> -->
-        <div class="headercontent">
-            <div class="wrapper_movies_games">
-                <a href="/" class="text">MOVIES/GAMES</a>
-            </div>
+        <div class="wrapper_movies_games">
+            <a href="/" class="text">MOVIES/GAMES</a>
+        </div>
 
-            <div class="addreview_profile">
-                <img src="/web/img/SignOutlogo.png" class="signOutlogoButton" id="signOutlogoButton" alt="">
+        <div class="addreview_profile">
+            <img src="/web/img/SignOutlogo.png" class="signOutlogoButton" id="signOutlogoButton" alt="">
 
-            </div>
         </div>
     </header>
 
@@ -30,45 +28,50 @@
         </div>
 
     </div>
-    <div>
+    <div class="add-review-container">
         <!-- review form -->
         <div class="review-form" id="add-user-review">
-            <p>Leave a review!</p>
-            <input id="review-title" type="text" class="review-title" placeholder="Title for your review">
-            <textarea class="review" type="text" id="review" placeholder="Leave your review"></textarea>
-            <div class="stars">
-                <span class="star" onclick="updateRating(1)">★</span>
-                <span class="star" onclick="updateRating(2)">★</span>
-                <span class="star" onclick="updateRating(3)">★</span>
-                <span class="star" onclick="updateRating(4)">★</span>
-                <span class="star" onclick="updateRating(5)">★</span>
+            <div class="review-form-content">
+                <p>Leave a review!</p>
+                <input id="review-title" type="text" class="review-title" placeholder="Title for your review">
+                <textarea class="review" type="text" id="review" placeholder="Leave your review"></textarea>
+                <div class="stars">
+                    <span class="star" onclick="updateRating(1)">★</span>
+                    <span class="star" onclick="updateRating(2)">★</span>
+                    <span class="star" onclick="updateRating(3)">★</span>
+                    <span class="star" onclick="updateRating(4)">★</span>
+                    <span class="star" onclick="updateRating(5)">★</span>
+                </div>
+                <p id="rating-text" class="rating-text">Rating:</p>
+                <button class="submit-review" id="submit-review">Submit</button>
+                <div class="error_message" id="error_message"></div>
             </div>
-            <p id="rating-text" class="rating-text">Rating:</p>
-            <button class="submit-review" id="submit-review">Submit</button>
-            <div class="error_message" id="error_message"></div>
         </div>
         <!-- edit review form -->
         <div class="edit-review-form" id="edit-user-review">
-            <p>Edit your review!</p>
-            <input id="edit-review-title" type="text" class="edit-review-title" placeholder="Edit the title">
-            <textarea class="edit-review" type="text" id="edit-review" placeholder="Edit your review"></textarea>
-            <div class="stars">
-                <span class="edstar" onclick="editupdateRating(1)">★</span>
-                <span class="edstar" onclick="editupdateRating(2)">★</span>
-                <span class="edstar" onclick="editupdateRating(3)">★</span>
-                <span class="edstar" onclick="editupdateRating(4)">★</span>
-                <span class="edstar" onclick="editupdateRating(5)">★</span>
+            <div class="review-form-content">
+                <p>Edit your review!</p>
+                <input id="edit-review-title" type="text" class="edit-review-title" placeholder="Edit the title">
+                <textarea class="edit-review" type="text" id="edit-review" placeholder="Edit your review"></textarea>
+                <div class="stars">
+                    <span class="edstar" onclick="editupdateRating(1)">★</span>
+                    <span class="edstar" onclick="editupdateRating(2)">★</span>
+                    <span class="edstar" onclick="editupdateRating(3)">★</span>
+                    <span class="edstar" onclick="editupdateRating(4)">★</span>
+                    <span class="edstar" onclick="editupdateRating(5)">★</span>
+                </div>
+                <p id="edit-rating-text" class="edit-rating-text">Rating:</p>
+                <button class="submit-edit-review" id="submit-edit-review">Submit</button>
+                <button class="submit-edit-review" id="cancel-edit-review">Cancel</button>
+                <div id="error_message"></div>
             </div>
-            <p id="edit-rating-text" class="edit-rating-text">Rating:</p>
-            <button class="submit-edit-review" id="submit-edit-review">Submit</button>
-            <div id="error_message"></div>
         </div>
-        
+
         <div id="show-user-review-container" class="show-user-review">
             <div class="review rows" id="show-user-review"></div>
             <div class="edit-review-buttons">
-                <button class="delete-user-review-btn" id="delete-user-review-btn">Delete review</button>
                 <button class="edit-user-review-btn" id="edit-user-review-btn">Edit review</button>
+                <button class="delete-user-review-btn" id="delete-user-review-btn">Delete review</button>
             </div>
 
         </div>
